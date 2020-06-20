@@ -8,8 +8,11 @@ const User = mongoose.Schema({
     birthdate: Date,
     gender: String,
     history:[{
-        dates : [Date], default : [],
-        workouts : [[String]], default : []
+        dates : Date,// must not include hours or minutes
+        workouts : [{
+            time : [Date],//must include hours and minutes
+            exercises : [String]
+        }], default : []
     }],
     blacklist:[String], default : []
 })
