@@ -4,7 +4,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 
 // routes import here
-
+const userRoute = require('./routes/user')
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*")
@@ -20,6 +20,9 @@ app.use((req, res, next) => {
 app.use('/',(req, res, next) => {
   res.sendFile(express.static(path.resolve(__dirname, '..', '..', 'vision', 'dist', 'vision', 'index.html')))
 })
+app.use('/user', userRoute)
+
+
 // set database URL:
 const dbURL = 'mongodb://localhost/test'
 
@@ -31,7 +34,7 @@ mongoose.connect(dbURL, {useNewUrlParser: true, useUnifiedTopology: true, useFin
     else {
       console.log('mongoose connected')
     }
-  })
+})
 
 
 module.exports = app
