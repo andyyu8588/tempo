@@ -1,4 +1,7 @@
+//import models
 const User = require("../models/User");
+const Exercise = require("../models/Exercise");
+
 
 //creates global database upon initial instantiation
 const createDatabase = (data)=>{
@@ -34,6 +37,7 @@ const createUser = (userData) => {
         birthdate : data.birthdate,
         gender : data.gender  
     })
+    console.log('user created!')
     user.save()
 }
 //adds a workout the the user blacklist
@@ -58,7 +62,8 @@ const checkBlacklisted = (data) => {
             console.log(err)
         }
         else{
-            if (datares[0].includes(data.name)){
+            if (res[0].blacklist.includes(data.name)){
+                console.log( data.name + ' is blacklisted!')
                 return true
             }
             else{
