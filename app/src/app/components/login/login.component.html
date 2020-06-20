@@ -4,6 +4,7 @@ ngbAutofocus
 class='modal-body'
 id='form'
 (ngSubmit)="loginClicked()"
+[formGroup]='loginForm'
 >
   <h1 class='modal-title'>Login</h1>
   <hr>
