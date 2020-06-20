@@ -1,5 +1,5 @@
 {
-  "name": "electron",
+  "name": "electronscript",
   "version": "1.0.0",
   "description": "electron script for angular app",
   "main": "main.ts",
