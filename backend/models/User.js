@@ -1,12 +1,11 @@
 const mongoose = require('mongoose')
 const User = mongoose.Schema({
-    email: String,
     username: String,
     password: String,
-    firstname: String,
-    lastname: String,
-    birthdate: Date,
-    gender: String,
+    difficulty : String, default : 'Intermediate',
+    equipment : [String], default : ['Bodyweight'],
+    bodyPart : [String], default : ['All'],
+    workoutDuration : Number, default : 5,
     history:[{
         dates : Date,// must not include hours or minutes
         workouts : [{
