@@ -5,13 +5,12 @@ const User = require("../models/User");
 const createUser = (userData) => {
 
     const user = new User({
-        email : userData.email,
         username : userData.username,
         password : userData.password,
-        firstname : userData.firstname,
-        lastname : userData.lastname,
-        birthdate : userData.birthdate,
-        gender : userData.gender  
+        difficulty : userData.difficulty,
+        equipment : userData.equipment,
+        bodyPart : userData.bodyPart,
+        workoutDuration : userData.workoutDuration,
     })
     console.log('user created!')
     user.save()
