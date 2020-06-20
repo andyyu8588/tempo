@@ -1,0 +1,36 @@
+{
+  "name": "tempo",
+  "version": "1.0.0",
+  "description": "desktop app to improve productivity and fitness",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ed99win/tempo.git"
+  },
+  "keywords": [
+    "angular",
+    "electron",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "andyyu8588, heiwangandrelaw SimonWang ed99win",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ed99win/tempo/issues"
+  },
+  "homepage": "https://github.com/ed99win/tempo#readme",
+  "dependencies": {
+    "@angular/cli": "^9.1.9",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.19"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
