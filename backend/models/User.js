@@ -1,20 +1,21 @@
 const mongoose = require('mongoose')
+
 const User = mongoose.Schema({
-    email: String,
-    username: String,
-    password: String,
-    firstname: String,
-    lastname: String,
-    birthdate: Date,
-    gender: String,
+    username : String,
+    password : String,
+    difficulty : {type : String, default : 'Intermediate'},
+    equipment : {type : [String], default : ['Bodyweight']},
+    bodyPart : {type : [String], default : ['Abs','Back','Biceps','Chest','Forearm', 'Glutes', 'Shoulders', 'Triceps', 'Upper Legs', 'Lower Legs', 'Cardio']},
+    workoutDuration : {type : Number, default : 5},
     history:[{
         dates : Date,// must not include hours or minutes
-        workouts : [{
+        workouts : {type : [{
             time : [Date],//must include hours and minutes
             exercises : [String]
-        }], default : []
+        }], 
+        default : []}
     }],
-    blacklist:[String], default : []
+    blacklist:{default : [String], default : []}
 })
 
 module.exports = mongoose.model('User', User)

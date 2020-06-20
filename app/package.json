@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "builder": "ng build --watch=true",
-    "loader": "nodemon --watch dist/app --watch electronscript.js --ext html,scss,js,ts --exec electron ."
+    "loader": "nodemon --watch dist/app --watch electronscript.js --ext html,scss,js,ts,map --exec electron ."
   },
   "private": true,
   "dependencies": {
