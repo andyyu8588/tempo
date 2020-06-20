@@ -2,13 +2,18 @@
   "name": "electronscript",
   "version": "1.0.0",
   "description": "electron script for angular app",
-  "main": "main.ts",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "electron": "nodemon --watch main.js --exec electron ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "typescript": "^3.9.5"
+  },
+  "devDependencies": {
+    "electron": "^9.0.4",
+    "nodemon": "^2.0.4"
   }
 }
