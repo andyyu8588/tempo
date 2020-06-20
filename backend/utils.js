@@ -5,13 +5,13 @@ const User = require("../models/User");
 const createUser = (userData) => {
 
     const user = new User({
-        email : data.email,
-        username : data.username,
-        password : data.password,
-        firstname : data.firstname,
-        lastname : data.lastname,
-        birthdate : data.birthdate,
-        gender : data.gender  
+        email : userData.email,
+        username : userData.username,
+        password : userData.password,
+        firstname : userData.firstname,
+        lastname : userData.lastname,
+        birthdate : userData.birthdate,
+        gender : userData.gender  
     })
     console.log('user created!')
     user.save()
@@ -34,7 +34,7 @@ const addToBlacklist = (exData) => {
 //takes in username and name
 const checkBlacklisted = (data) => {
     return new Promise((resolve, reject) => {
-        User.find({username : data.username}.exec((res,err)=>{
+        User.find({username : data.username}.exec((err,res)=>{
             if (err){
                 reject(err)
             }
@@ -51,4 +51,25 @@ const checkBlacklisted = (data) => {
     )}
 )}
 
-module.exports = {userData, addToBlacklist, checkBlacklisted}
+//update user history
+//takes in object containing username, date, time and exercises
+const updateHistory = (data) => {
+
+    User.findOneAndUpdate({username : data.username},
+        {$push:{ history,[history.length-1] : 'asd' }}
+    
+        )
+
+}
+
+
+
+module.exports = {createUser, addToBlacklist, checkBlacklisted}
+
+// res[0].update({$push:{ history :{
+//     date : data.date,
+//     workouts : [{
+//         time : data.time,
+//         exercises : [data.exercises]
+//     }]
+// } }})

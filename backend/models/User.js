@@ -7,6 +7,13 @@ const User = mongoose.Schema({
     lastname: String,
     birthdate: Date,
     gender: String,
+    history:[{
+        dates : Date,// must not include hours or minutes
+        workouts : [{
+            time : [Date],//must include hours and minutes
+            exercises : [String]
+        }], default : []
+    }],
     blacklist:[String], default : []
 })
 
