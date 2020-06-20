@@ -1,7 +1,7 @@
 {
   "name": "app",
   "version": "0.0.0",
-  "main": "mainelectron.js",
+  "main": "electronscript.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "builder": "ng build --prod --watch=true",
-    "loader": "nodemon --watch dist/app --watch mainelectron.js --ext html,scss,js,ts --exec electron ."
+    "builder": "ng build --watch=true",
+    "loader": "nodemon --watch dist/app --watch electronscript.js --ext html,scss,js,ts --exec electron ."
   },
   "private": true,
   "dependencies": {
@@ -24,8 +24,7 @@
     "@angular/platform-browser": "~9.1.11",
     "@angular/platform-browser-dynamic": "~9.1.11",
     "@angular/router": "~9.1.11",
-    "bootstrap": "^4.5.0",
-    "jquery": "^3.5.1",
+    "auto-launch": "^5.0.5",
     "ngx-electron": "^2.2.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
