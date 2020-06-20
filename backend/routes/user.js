@@ -38,10 +38,42 @@ router.post('/add', (req, res, next) => {
     })
 })
 
+// // adds exercise
+// router.post('/exercise', (req, res, next) => {
+//     User.findOneAndUpdate({username : req.body.username},
+//         {$push: {blacklist : req.body.name}}, (err) => {
+//             if (err) {
+//                 res.status(500).json({
+//                     message: err
+//                 })
+//             }
+//             else {
+//                 res.status(200).json({
+//                     message: `Success! ${req.body.name} added to ${req.body.username} blacklist!`
+//                 })
+//             }
+//     })  
+// )
+
+// returns the user, takes in the username
+router.get('/', (req, res, next) => {
+    User.find({username : req.params.username}, (err, result) => {
+        if (err) {
+            res.status(500).json({
+                message: err
+            })
+        } else {
+            res.status(200).json({
+                user: result
+            })
+        }
+    })
+})
+
 // returns true if workout is in blacklist
 // takes in username and name
 router.get('/check', (req, res, next) => {
-    User.find({username : req.params.username}.exec((res, err) => {
+    User.find({username : req.params.username}.exec((err, res) => {
         if (err) {
             res.status(500).json({
                 message: err
