@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const path = require('path')
+const mongoose = require('mongoose')
 
 // routes import here
 
@@ -19,5 +20,18 @@ app.use((req, res, next) => {
 app.use('/',(req, res, next) => {
   res.sendFile(express.static(path.resolve(__dirname, '..', '..', 'vision', 'dist', 'vision', 'index.html')))
 })
+// set database URL:
+const dbURL = 'mongodb://localhost/test'
+
+// connect mongoose to Mongodb
+mongoose.connect(dbURL, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}, (err) => {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      console.log('mongoose connected')
+    }
+  })
+
 
 module.exports = app
