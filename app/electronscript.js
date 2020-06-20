@@ -2,7 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu, shell, Tray, application } = require(
 const AutoLaunch = require('auto-launch')
 const fs = require('fs')
 
-var window
+var window = null
 
 var tray = null
 var trayMenu = Menu.buildFromTemplate([
@@ -89,6 +89,12 @@ app.on('activate', () => {
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
+  }
+})
+
+app.on('quit', () => {
+  if (app.isQuitting) {
+    tray.destroy()
   }
 })
 
