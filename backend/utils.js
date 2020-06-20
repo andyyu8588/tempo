@@ -57,20 +57,22 @@ const addToBlacklist = (exData) => {
 //returns true if workout is in blacklist
 //takes in username and name
 const checkBlacklisted = (data) => {
-    User.find({username : data.username},(res,err)=>{
-        if (err){
-            console.log(err)
-        }
-        else{
-            if (res[0].blacklist.includes(data.name)){
-                console.log( data.name + ' is blacklisted!')
-                return true
+    return new Promise((resolve, reject) => {
+        User.find({username : data.username}.exec((res,err)=>{
+            if (err){
+                reject(err)
             }
             else{
-                return false
+                if (res[0].blacklist.includes(data.name)){
+                    console.log( data.name + ' is blacklisted!')
+                    resolve(true)
+                }
+                else{
+                    resolve(false)
+                }
             }
-        }
-    })
-}
+        })
+    )}
+)}
 
 module.exports = {createDatabase, createUser, addToBlacklist, checkBlacklisted}
