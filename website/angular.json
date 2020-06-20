@@ -130,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "website"
+  "defaultProject": "website",
+  "cli": {
+    "analytics": "91705062-f516-40a6-8001-7c5fcb391cf6"
+  }
 }

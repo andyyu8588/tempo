@@ -1,29 +1,5 @@
 //import models
 const User = require("../models/User");
-const Exercise = require("../models/Exercise");
-
-
-//creates global database upon initial instantiation
-const createDatabase = (data)=>{
-    data.forEach(element => {
-        const exercise = new Exercise({
-            name : element.name,
-            demonstration_1 : element.demonstration_1,
-            demonstration_2 : element.demonstration_2,
-            demonstration_3 : element.demonstration_3,
-            main : element.main,
-            detailed : element.detailed,
-            other : element.other,
-            type : element.type,
-            mechanic : element.mechanic,
-            equipment : element.equipment,
-            difficulty : element.difficulty,
-            muscle_img : element.muscle_img,
-            instructions : element.instructions,
-            })
-        exercise.save()
-    });
-}
 
 //adds new user to the database upon registration
 const createUser = (userData) => {
@@ -75,4 +51,4 @@ const checkBlacklisted = (data) => {
     )}
 )}
 
-module.exports = {createDatabase, createUser, addToBlacklist, checkBlacklisted}
+module.exports = {userData, addToBlacklist, checkBlacklisted}
