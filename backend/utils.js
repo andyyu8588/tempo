@@ -34,7 +34,7 @@ const addToBlacklist = (exData) => {
 //takes in username and name
 const checkBlacklisted = (data) => {
     return new Promise((resolve, reject) => {
-        User.find({username : data.username}.exec((res,err)=>{
+        User.find({username : data.username}.exec((err,res)=>{
             if (err){
                 reject(err)
             }
@@ -51,4 +51,25 @@ const checkBlacklisted = (data) => {
     )}
 )}
 
+//update user history
+//takes in object containing username, date, time and exercises
+const updateHistory = (data) => {
+
+    User.findOneAndUpdate({username : data.username},
+        {$push:{ history,[history.length-1] : 'asd' }}
+    
+        )
+
+}
+
+
+
 module.exports = {createUser, addToBlacklist, checkBlacklisted}
+
+// res[0].update({$push:{ history :{
+//     date : data.date,
+//     workouts : [{
+//         time : data.time,
+//         exercises : [data.exercises]
+//     }]
+// } }})
