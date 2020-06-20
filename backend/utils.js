@@ -5,13 +5,13 @@ const User = require("../models/User");
 const createUser = (userData) => {
 
     const user = new User({
-        email : data.email,
-        username : data.username,
-        password : data.password,
-        firstname : data.firstname,
-        lastname : data.lastname,
-        birthdate : data.birthdate,
-        gender : data.gender  
+        email : userData.email,
+        username : userData.username,
+        password : userData.password,
+        firstname : userData.firstname,
+        lastname : userData.lastname,
+        birthdate : userData.birthdate,
+        gender : userData.gender  
     })
     console.log('user created!')
     user.save()
@@ -51,4 +51,4 @@ const checkBlacklisted = (data) => {
     )}
 )}
 
-module.exports = {userData, addToBlacklist, checkBlacklisted}
+module.exports = {createUser, addToBlacklist, checkBlacklisted}
