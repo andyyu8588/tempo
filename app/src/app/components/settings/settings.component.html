@@ -1,3 +1,4 @@
+<br>
 <mat-card class="">
     <mat-card-content class="container-fluid">
         <div class="row">
@@ -28,6 +29,7 @@
         </div>
     </mat-card-content>
 </mat-card>
+<br>
 <mat-card class="">
     <mat-card-content class="">
         <mat-label>
@@ -45,6 +47,7 @@
         </section>
     </mat-card-content>
 </mat-card>
+<br>
 <mat-card class="">
     <mat-card-content class="">
         <mat-label>
@@ -59,6 +62,32 @@
         </section>
     </mat-card-content>
 </mat-card>
+<br>
+<hr>
+<button mat-button color='primary' class="font-weight-bold">Other Settings</button>
+<br>
+<mat-card class="">
+    <mat-card-content class="">
+        <span>Launch on Startup &nbsp; <mat-slide-toggle [checked]='onStartup' (toggleChange)='toggleStartup()'></mat-slide-toggle></span>
+    </mat-card-content>
+</mat-card>
+<br>
+<mat-card class="">
+    <mat-card-content class="">
+        <mat-label>
+            <button mat-button color="primary">Time Between Workouts:</button>
+        <button mat-flat-button color="primary">
+            <!-- pipe needed -->
+          {{ timeout.value }} min
+        </button> 
+        </mat-label>
+        <br>
+        <section class="example-section">
+            <mat-slider #timeout [displayWith]='formatTimeout' min="1" max="1440" value='1'></mat-slider>
+        </section>
+    </mat-card-content>
+</mat-card>
+<br>
 <div>
     <button mat-button (click)='cancel()'>Cancel</button>
     <button mat-button routerLink (click)='preferenceClick()'>Done</button>

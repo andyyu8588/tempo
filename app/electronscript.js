@@ -115,29 +115,40 @@ ipcMain.on('get', (event, arg) => {
   event.returnValue = data
 })
 
+ipcMain.on('startup', (event, arg) => {
+  startup.isEnabled()
+  .then(state => {
+    event.returnValue = state
+  })
+  .catch(err => {
+    console.log(err)
+    event.returnValue = err
+  })
+})
+
 ipcMain.on('toggleStartup', (event, arg) => {
   startup.isEnabled()
   .then(state => {
-    console.log(state)
     if (state) {
       startup.disable()
-      .then(res => {
-        event.returnValue = false
+      .then(() => {
+        event.returnValue = ''
       })
       .catch(err => {
-        console.log(err)
+        event.returnValue = err
       })
     } else {
       startup.enable()
-      .then(res => {
-        event.returnValue = true
+      .then(() => {
+        event.returnValue = ''
       })
       .catch(err => {
-        console.log(err)
+        event.returnValue = err
       })
     }
   })
   .catch(err => {
     console.log(err)
+    event.returnValue = err
   })
 })

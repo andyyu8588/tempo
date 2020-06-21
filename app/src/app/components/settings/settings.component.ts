@@ -1,3 +1,4 @@
+import { ElectronService } from 'ngx-electron';
 import { StorageService } from './../../services/storage.service';
 import { HttpResponse } from '@angular/common/http';
 import { HttpService } from './../../services/http.service';
@@ -19,6 +20,7 @@ export class SettingsComponent implements OnInit {
   private _equipment: any[] = []
 
   time: number = 10
+  timeout: any = '1'
 
   formatLabel(value: number) {
     this.time = value
@@ -29,11 +31,22 @@ export class SettingsComponent implements OnInit {
     return value;
   }
 
-  constructor(private HttpService: HttpService, private StorageService: StorageService) { }
+  formatTimeout(value: number) {
+    let hour = Math.floor(value/60)
+    let min = value % 60
+    this.timeout = `${hour}h${min}min`
+    return value;
+  }
+
+  onStartup: boolean
+
+  constructor(private HttpService: HttpService,
+              private ElectronService: ElectronService) { }
 
   ngOnInit(): void {
     this.muscleGroups = ['Abs','Back','Biceps','Chest','Forearm', 'Glutes', 'Shoulders', 'Triceps', 'Upper Legs', 'Lower Legs', 'Cardio']
     this.equipment = ['Bands', 'Barbell', 'Bench', 'Dumbbell', 'Exercise Ball', 'EZ - Bar', 'Foam Roll', 'Kettlebell', 'Machine - Cardio', 'Machine - Strength', 'Pull Bar', 'Weight Plate']
+    this.onStartup = this.ElectronService.ipcRenderer.sendSync('startup')
   }
 
   changeMuscle(value: string) {
@@ -72,6 +85,15 @@ export class SettingsComponent implements OnInit {
     // } else {
     //   console.log('no local')
     // }
+  }
+
+  toggleStartup() {
+    let status = this.ElectronService.ipcRenderer.sendSync('toggleStartup')
+    if (status != '') {
+      this.onStartup = this.onStartup
+    } else {
+      this.onStartup = !this.onStartup
+    }
   }
 
   cancel() {
