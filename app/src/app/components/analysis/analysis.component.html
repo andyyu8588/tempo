@@ -1,25 +1,14 @@
-<ngx-charts-line-chart [view]="view"
+<button mat-raised-button (click)='clicked()'> change view </button>
+
+
+<ngx-charts-bar-vertical-2d class
+[view]="view"
 [scheme]="colorScheme"
-[results] = "days"
-legend= "true"
-showXAxisLabel="true"
-showYAxisLabel="true"
-xAxisLabel="Days"
-yAxisLabel="Workouts"
->
-
-</ngx-charts-line-chart>
-
-<br>
-
-<!-- <ngx-charts-line-chart [view]="view"
-legend= "true"
-showXAxisLabel="true"
-showYAxisLabel="true"
-xAxis="popularity"
-yAxis="time(weeks)"
-xAxisLabel="time(weeks)"
-yAxisLabel="popularity"
-timeline="true">
-
-</ngx-charts-line-chart> -->
+[results]="results"
+legend='true'
+legendTitle='workouts'
+xAxis='true'
+yAxies='true'
+showXAxisLabel='true'
+showYAxisLabel='true'>
+</ngx-charts-bar-vertical-2d>

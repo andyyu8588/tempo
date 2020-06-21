@@ -8,21 +8,36 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./analysis.component.scss']
 })
 export class AnalysisComponent implements OnInit {
-  username = 'andy123'
-  days = [{
-    series: [
+results:any = [
+  {
+    "name": "Germany",
+    "series": [
       {
-        name: 123,
-        value: 11212
+        "name": "2010",
+        "value": 7300000
+      },
+      {
+        "name": "2011",
+        "value": 8940000
       }
     ]
-  }]
-  times = []
-  workouts = [5, 6, 7]
-  exercises = []
+  },
 
-  view: any[] = [window.innerWidth*0.37,window.innerHeight*.70]
-  view2: any[] = [window.innerWidth*0.90,window.innerHeight]
+  {
+    "name": "USA",
+    "series": [
+      {
+        "name": "2010",
+        "value": 7870000
+      },
+      {
+        "name": "2011",
+        "value": 8270000
+      }
+    ]
+  }
+]
+  view: any[] = [window.innerWidth*0.90,window.innerHeight]
   colorScheme = {
     domain: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
     '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -39,20 +54,38 @@ export class AnalysisComponent implements OnInit {
   constructor(private HttpService: HttpService) { }
 
   ngOnInit(): void {
-    this.getData()
+    this.results = this.getData()
   }
-
+  clicked(){
+    console.log(localStorage.getItem('username'))
+    console.log(this.results)
+  }
   getData() {
-  //   this.HttpService.get('/user', {username: this.username}).then((data: any) => {
-  //     let history = data.user[0].history
-  //     history.forEach((day) => {
-  //       this.days.push(day.date)
-  //       this.workouts.push(day.workouts)
-  //     })
-  //     console.log(this.days)
-  //     console.log(this.workouts)
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   })
+
+    let username = localStorage.getItem('username')
+    this.HttpService.get('/user', {username: username}).then((data: any) => {
+      console.log(data)
+      let history = data.user[0].history
+      console.log(history)
+      let series = []
+      history.forEach(days => {
+        let name = (history.indexOf(days)+1).stringify() // day (1,2,3,4...)
+        let date = (days.date)//gets given date
+        let value = (days.workouts.length).stringify() // number of workouts done that day
+        series.push({
+          name : name,
+          date : date,
+          value : value,
+        })
+      });
+      let output = [{
+        'name' : "workout",
+        'series' : series
+      }]
+      return output
+
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 }
