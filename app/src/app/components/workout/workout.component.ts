@@ -1,3 +1,5 @@
+import { HttpClient } from '@angular/common/http';
+import { HttpService } from './../../services/http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,6 +11,22 @@ export class WorkoutComponent implements OnInit {
   done: boolean = false;
   first: boolean = true;
   pause: boolean = false;
+  workout = [
+    {
+      "Workout": "90 90 Hamstring ",
+      "Demonstration_1": "https://www.jefit.com/images/exercises/800_600/1860.jpg",
+      "Demonstration_2": "https://www.jefit.com/images/exercises/800_600/1861.jpg",
+      "Demonstration_3": "",
+      "Main": "Upper Legs",
+      "Detailed": "Hamstrings",
+      "Other": "",
+      "Type": "Stretching",
+      "Mechanic": "N/A",
+      "Equipment": "Body Only",
+      "Difficulty": "Beginner",
+      "Muscle_img": "https://www.jefit.com/images/exercises/b8.jpg",
+      "Instructions": "Steps : \n\n1.) To begin this exercise; start off lying flat on your back with one leg extended out and with your other leg bend it and grab the knee with your hands.\n\n2.) Take the leg that is being bent and extend it straight into the air and hold onto the position for up to 15 seconds and then alternate legs.\n\n3.) Repeat this exercise for as many repetitions as needed"
+    }]
 
   // Start with an initial value of 20 seconds
   TIME_LIMIT = 20;
@@ -37,7 +55,7 @@ export class WorkoutComponent implements OnInit {
   
   remainingPathColor = this.COLOR_CODES.info.color;
 
-  constructor() { }
+  constructor(private HttpService: HttpService, private HttpClient: HttpClient) { }
 
   ngOnInit(): void {
   }
@@ -62,8 +80,6 @@ export class WorkoutComponent implements OnInit {
     }
 
     this.setRemainingPathColor(this.timeLeft)
-
-    console.log(this.timePassed)
   
     // The output in MM:SS format
     return `${minutes}:${secondsString}`;
@@ -137,5 +153,22 @@ export class WorkoutComponent implements OnInit {
         .getElementById("base-timer-path-remaining")
         .classList.add(warning.color);
     }
+  }
+
+  addWorkout() {
+    let exerciseNames = []
+    this.workout.forEach((exercise) => {
+      exerciseNames.push(exercise.Workout)
+    })
+    this.HttpService.post('/user/exercise', {
+      username: 'andy123',
+      date: new Date().toISOString(),
+      time: new Date().toISOString(),
+      exercises: exerciseNames
+    }).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 }

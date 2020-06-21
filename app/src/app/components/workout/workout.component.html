@@ -26,3 +26,5 @@
 <button *ngIf="done || first" mat-button (click)="startTimer()">Start!</button>
 <button *ngIf="!done && !pause && !first" mat-button (click)="pauseTimer()">Pause</button>
 <button *ngIf="!done && pause && !first" mat-button (click)="resumeTimer()">Resume</button>
+
+<button mat-button (click)="addWorkout()">Add workout</button>
