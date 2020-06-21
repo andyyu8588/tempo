@@ -11,10 +11,9 @@ export class TimerService {
 
   constructor(private ElectronService: ElectronService) { 
     console.log('boom')
+    this.ElectronService.ipcRenderer.on('timeAlert', (event, arg) => {
+      console.log(arg)
+    })
   }
 
-
-  check() {
-    console.log(this.ElectronService.ipcRenderer.sendSync('state'))
-  }
 }

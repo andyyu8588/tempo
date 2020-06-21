@@ -20,7 +20,8 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
   constructor(private SessionService: SessionService,
               private StorageService: StorageService,
               private ElectronService: ElectronService,
-              private HttpService: HttpService) 
+              private HttpService: HttpService,
+              private TimerService: TimerService) 
   {
     let data: {[key: string]: any} = this.StorageService.get()
     if (data.username) {
