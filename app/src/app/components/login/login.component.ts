@@ -1,3 +1,4 @@
+import { HttpResponse } from '@angular/common/http';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -17,6 +18,9 @@ export class LoginComponent implements OnInit {
   login_err: boolean = false
   hide: boolean = true
 
+  responseStatus: boolean = false
+  responseMessage: string = ''
+
   constructor(private router: Router, private HttpService: HttpService) { }
 
   ngOnInit() {
@@ -30,16 +34,20 @@ export class LoginComponent implements OnInit {
         email: this.loginForm.get('username').value,
         password: this.loginForm.get('password').value
       }
-      this.HttpService.get('', credentials)
+      this.HttpService.get('/login', credentials)
       .then((response: any) => {
         if (response.status == 200) {
           this.login_err = false
         } else {
+          this.responseStatus = true
+          this.responseMessage = response
           this.login_err = true
         }
       })
       .catch(err => {
         this.login_err = true
+        this.responseStatus = true
+        this.responseMessage = err.message
         console.log(err)
       })
     } else {

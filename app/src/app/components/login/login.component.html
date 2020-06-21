@@ -31,6 +31,8 @@
         </button>
       </mat-form-field>
       <button mat-raised-button color='primary' type='submit' id='submit' aria-required='true'>Login</button>
+      <br>
+      <small id="passwordHelpBlock" class="text-danger" *ngIf="responseStatus">There was an error processing your request: {{ responseMessage }}</small>
     </form>
   </mat-card-content>
 </mat-card>
