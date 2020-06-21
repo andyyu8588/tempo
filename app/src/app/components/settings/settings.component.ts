@@ -75,7 +75,5 @@ export class SettingsComponent implements OnInit {
   }
 
   cancel() {
-    this._equipment = []
-    this.ngOnInit()
   }
 }
