@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
 
   registrationForm: FormGroup
   editable: boolean = true
-  hide: boolean = false
+  hide: boolean = true
   checkUsernameUse: boolean = false
   checkPasswordValidity: boolean
 

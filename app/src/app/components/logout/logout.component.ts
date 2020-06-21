@@ -14,7 +14,7 @@ export class LogoutComponent implements OnInit {
 
   logout() {
     localStorage.clear()
-    window.location.reload()
+    // window.location.reload()
   }
 
 }

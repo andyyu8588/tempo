@@ -67,27 +67,45 @@ router.post('/add', (req, res, next) => {
 
 // adds exercise
 router.post('/exercise', (req, res, next) => {
-    User.findOne({username : data.username}, (err, res) => {
+    User.findOne({username : req.body.username}, (err, result) => {
         if (err) {
-            console.log(err)
+            res.status(500).json({
+                message: err
+            })
         }
         else {
-            if (res[0]) {//append workout to history
-                if (res[0].history[history.length-1].date == data.date) {
-                    res[0].history[history.length-1].workouts.push(
-                        {type : data.time, value : data.exercises}
-                    )
-                    res.save()
-                    
-                }
-                else {//create new history
-                    res[0].history.append({
-                        date : data.date,
-                        workouts : [{type : data.time, value : data.exercises}],
-                    })
-                    res.save()                    
-                }
+            console.log(req.body)
+            if (result.history.length == 0) {
+                result.history.push({
+                    date : req.body.date,
+                    workouts : [{time : req.body.time, value : req.body.exercises}],
+                })
+                result.save()
+                res.status(200).json({
+                    message: `Success! Workout added!`
+                })   
             }
+            else if (result.history[result.history.length-1].date == req.body.date) {
+                result.history[result.history.length-1].workouts.push(
+                    {type : req.body.time, value : req.body.exercises}
+                )
+                result.save()
+                res.status(200).json({
+                    message: `Success! Workout added!`
+                })
+            }
+            else { //create new history
+                console.log('c')
+                result.history.push({
+                    date : req.body.date,
+                    workouts : [{type : req.body.time, value : req.body.exercises}],
+                })
+                result.save()
+                res.status(200).json({
+                    message: `Success! Workout added!`
+                })                    
+            }
+            
         }
     })
 })
