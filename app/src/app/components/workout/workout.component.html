@@ -30,30 +30,26 @@
 <!-- <button mat-button (click)="createWorkout()">create a Workout</button> -->
 <button mat-button (click)="saveWorkout()">Save</button>
 
-<div *ngIf="progress">  
-  <mat-expansion-panel *ngFor="let exercise of workout">
-    <mat-expansion-panel-header>
-      {{exercise.Workout}}
-    </mat-expansion-panel-header>
-    <div *ngIf="exercise.Demonstration_1" class="img-thumbnail">
-      <img [src]="exercise.Demonstration_1">
+<div *ngIf="progress">      
+    {{WIP[0].Workout}}    
+    <div *ngIf="WIP[0].Demonstration_1" class="img-thumbnail">
+      <img [src]="WIP[0].Demonstration_1">
     </div>
-    <div *ngIf="exercise.Demonstration_2" class="img-thumbnail">
-      <img [src]="exercise.Demonstration_2">
+    <div *ngIf="WIP[0].Demonstration_2" class="img-thumbnail">
+      <img [src]="WIP[0].Demonstration_2">
     </div>
-    <div *ngIf="exercise.Demonstration_3" class="img-thumbnail">
-      <img [src]="exercise.Demonstration_3">
+    <div *ngIf="WIP[0].Demonstration_3" class="img-thumbnail">
+      <img [src]="WIP[0].Demonstration_3">
     </div>
-    Main: {{exercise.Main}} <br>
-    <div *ngIf="exercise.Detailed">
-      Detailed: {{exercise.Detailed}} <br>
+    Main: {{WIP[0].Main}} <br>
+    <div *ngIf="WIP[0].Detailed">
+      Detailed: {{WIP[0].Detailed}} <br>
     </div>
-    Equipment: {{exercise.Equipment}} <br>
-    Difficulty: {{exercise.Difficulty}} <br>
-    Mechanic: {{exercise.Mechanic}} <br>
-    Type: {{exercise.Type}} <br>
-    Instructions: {{exercise.Instructions}} <br>
-  </mat-expansion-panel>
+    Equipment: {{WIP[0].Equipment}} <br>
+    Difficulty: {{WIP[0].Difficulty}} <br>
+    Mechanic: {{WIP[0].Mechanic}} <br>
+    Type: {{WIP[0].Type}} <br>
+    Instructions: {{WIP[0].Instructions}} <br>
 </div>
 
 <div *ngIf="!progress">
