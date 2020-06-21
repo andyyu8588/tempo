@@ -2,9 +2,13 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 // routes import here
 const userRoute = require('./routes/user')
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false}))
 
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*")
@@ -17,9 +21,9 @@ app.use((req, res, next) => {
 })
 
 // serve angular
-app.use('/',(req, res, next) => {
-  res.sendFile(express.static(path.resolve(__dirname, '..', '..', 'vision', 'dist', 'vision', 'index.html')))
-})
+// app.use('/',(req, res, next) => {
+//   // res.sendFile(express.static(path.resolve(__dirname, '..', '..', 'vision', 'dist', 'vision', 'index.html')))
+// })
 app.use('/user', userRoute)
 
 
