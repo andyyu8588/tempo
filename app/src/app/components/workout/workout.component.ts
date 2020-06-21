@@ -1,10 +1,7 @@
 import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { WorkoutService } from './../../services/workout.service'
-import { MatTreeNestedDataSource, MatTreeModule } from '@angular/material/tree';
-import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatAccordion } from '@angular/material/expansion';
 
 export class Node {
@@ -19,21 +16,21 @@ export class Node {
   styleUrls: ['./workout.component.scss']
 })
 export class WorkoutComponent implements OnInit {
-  // workout stuff
-  done: boolean = false;
-  first: boolean = true;
-  loading: boolean = false;
-  pause: boolean = false;
-  progress: boolean = false;
-  rating: boolean = false;
-  hiddenWorkout = []
-  workout: any
-  WIP: any
 
-  // Start with an initial value of 20 seconds
-  TIME_LIMIT = 2;
-  WARNING_THRESHOLD = 10;
-  ALERT_THRESHOLD = 5;
+  // workout stuff
+  done: boolean = false; // if current exercise is done
+  first: boolean = true; // if the component is first loaded
+  pause: boolean = false; // if workout is paused
+  progress: boolean = false; // if workout is in progress
+  rating: boolean = false; // if rating is in progress
+  hiddenWorkout = [] // full workout
+  workout: any // full workout
+  WIP = [] // workouts in progress
+
+  // Start with an initial value of 60 seconds
+  TIME_LIMIT = 60; // time for each exercise
+  WARNING_THRESHOLD = 20; // changes color
+  ALERT_THRESHOLD = 10; // changes color
 
   // Initially, no time has passed, but this will count up
   // and subtract from the TIME_LIMIT
@@ -60,64 +57,14 @@ export class WorkoutComponent implements OnInit {
   // expansion stuff
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  // tree stuff
-  nestedTreeControl: NestedTreeControl<Node>
-  nestedDataSource: MatTreeNestedDataSource<Node>
-  dataChange: BehaviorSubject<Node[]> = new BehaviorSubject<Node[]>([]);
+  constructor(private HttpService: HttpService, private WorkoutService : WorkoutService) { }
 
-  constructor(private HttpService: HttpService, private HttpClient: HttpClient, private WorkoutService : WorkoutService) {
-    this.nestedTreeControl = new NestedTreeControl<Node>(this._getChildren)
-    this.nestedDataSource = new  MatTreeNestedDataSource()
-    this.dataChange.subscribe((data) => {
-      this.nestedDataSource.data = data
-    })
-
-    this.dataChange.next([
-      {
-        name: "folder",
-        type: "",
-        children: [
-          {
-            name: "test3",
-            type: "asd",
-            children: [],
-          }
-        ],
-      },
-      {
-        name: "folder",
-        type: "",
-        children: [
-          {
-            name: "test3",
-            type: "asd",
-            children: [],
-          }
-        ],
-      },
-      {
-        name: "folder",
-        type: "",
-        children: [
-          {
-            name: "test3",
-            type: "asd",
-            children: [],
-          }
-        ],
-      },
-      {
-        name: "test2",
-        type: "asd",
-        children: [],
-      },
-    ])
-   }
-
+  // generate workout on init
   ngOnInit(): void {
     this.createWorkout()
   }
 
+  // cleanup
   ngOnDestroy() {
     this.done = true;
     this.timeLeft = this.TIME_LIMIT
@@ -126,14 +73,7 @@ export class WorkoutComponent implements OnInit {
     this.timerInterval = null;
   }
 
-  private _getChildren = (node: Node) => {
-    return observableOf(node.children)
-  } 
-
-  hasNestedChild = (_: number, nodeData: Node) => {
-    return !(nodeData.type)
-  } 
-
+  // time displayed on timer
   formatTimeLeft(time: number) {
     // The largest round integer less than or equal to the result of time divided being by 60.
     const minutes = Math.floor(time / 60);
@@ -143,14 +83,11 @@ export class WorkoutComponent implements OnInit {
     let secondsString;
 
     // If the value of seconds is less than 10, then display seconds with a leading zero
-    if (this.loading) {
-      console.log('asd') 
-      return "Next!"
-    } else if (seconds < 0) {
+    if (seconds < 0) {
       return "Done!"
     } else if (seconds == 0) {
       this.stopTimer()
-      return 'Next'
+      return 'Next!'
     } else if (seconds < 10) {
       secondsString = `0${seconds}`;
       this.setRemainingPathColor(this.timeLeft)
@@ -164,24 +101,27 @@ export class WorkoutComponent implements OnInit {
     }    
   }
 
+  // workout is started
   startTimer() {
-    this.progress = true;
-    this.done = false;
-    this.first = false;
-    this.WIP = this.workout
-    this.workout = []
-    this.timerInterval = setInterval(() => {
+    if (this.hiddenWorkout.length != 0) {
+      this.progress = true;
+      this.done = false;
+      this.first = false;
+      this.workout = []
+      this.timerInterval = setInterval(() => {
 
-      // The amount of time passed increments by one
-      this.timePassed = this.timePassed += 1;
-      this.timeLeft = this.TIME_LIMIT - this.timePassed;
+        // The amount of time passed increments by one
+        this.timePassed = this.timePassed += 1;
+        this.timeLeft = this.TIME_LIMIT - this.timePassed;
 
-      // The time left label is updated
-      document.getElementById("base-timer-label").innerHTML = this.formatTimeLeft(this.timeLeft);
-      this.setCircleDasharray();
-    }, 1000);
+        // The time left label is updated
+        document.getElementById("base-timer-label").innerHTML = this.formatTimeLeft(this.timeLeft);
+        this.setCircleDasharray();
+      }, 1000);
+    }
   }
 
+  // swap to next exercise
   nextExercise() {
     if (this.WIP.length == 1) {
       this.WIP.shift()
@@ -190,7 +130,6 @@ export class WorkoutComponent implements OnInit {
     } else {
       this.done = false;
       this.WIP.shift()
-      this.loading = false
       this.timerInterval = setInterval(() => {
 
         // The amount of time passed increments by one
@@ -204,8 +143,8 @@ export class WorkoutComponent implements OnInit {
     }
   }
 
+  // each time timer reaches 0 seconds
   stopTimer() {
-    this.loading = true;
     this.done = true;
     this.timeLeft = this.TIME_LIMIT
     this.timePassed = 0
@@ -214,21 +153,25 @@ export class WorkoutComponent implements OnInit {
     this.nextExercise()
   }
 
+  // on pause
   pauseTimer() {
     this.pause = true;
     clearInterval(this.timerInterval)
   }
 
+  // on resume
   resumeTimer() {
     this.pause = false;
     this.startTimer();
   }
 
+  // time stuff
   calculateTimeFraction() {
     const rawTimeFraction = this.timeLeft / this.TIME_LIMIT;
     return rawTimeFraction - (1 / this.TIME_LIMIT) * (1 - rawTimeFraction);
   }
 
+  // time stuff
   setCircleDasharray() {
     const circleDasharray = `${(
       this.calculateTimeFraction() * 283
@@ -261,11 +204,12 @@ export class WorkoutComponent implements OnInit {
     }
   }
 
-  // creates workout and send
+  // creates workout and send to class fields
   createWorkout(){
    this.WorkoutService.createWorkout(localStorage.getItem('username')).then((res) => {
      this.workout = res
      this.workout.forEach((exercise) => {
+       this.WIP.push(exercise)
        this.hiddenWorkout.push(exercise)
      })
      console.log(this.hiddenWorkout)
@@ -274,6 +218,7 @@ export class WorkoutComponent implements OnInit {
    })
   }
 
+  // saves workout to database
   saveWorkout() {
     this.WorkoutService.saveWorkout(this.hiddenWorkout, localStorage.getItem('username')).then((res) => {
       console.log('workout saved')
@@ -282,10 +227,12 @@ export class WorkoutComponent implements OnInit {
     })
   }
 
+  // thumbs up
   up(exercise) {
     this.hiddenWorkout.splice(this.hiddenWorkout.indexOf(exercise), 1)
   }
 
+  // thumbs down, blacklisted
   down(exercise) {
     this.hiddenWorkout.splice(this.hiddenWorkout.indexOf(exercise), 1)
     this.HttpService.post('/user/add', {
