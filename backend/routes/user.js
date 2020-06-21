@@ -88,7 +88,7 @@ router.post('/exercise', (req, res, next) => {
             else if (result.history[result.history.length-1].date == req.body.date) {
                 console.log('appended to current history')
                 result.history[result.history.length-1].workouts.push(
-                    {type : req.body.time, value : req.body.exercises}
+                    {time : req.body.time, value : req.body.exercises}
                 )
                 result.save()
                 res.status(200).json({
@@ -99,7 +99,7 @@ router.post('/exercise', (req, res, next) => {
                 console.log('new history created')
                 result.history.push({
                     date : req.body.date,
-                    workouts : [{type : req.body.time, value : req.body.exercises}],
+                    workouts : [{time : req.body.time, value : req.body.exercises}],
                 })
                 result.save()
                 res.status(200).json({

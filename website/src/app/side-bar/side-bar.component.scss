@@ -1,0 +1,39 @@
+// Side bar
+.mat-sidenav{
+    position: relative;
+    text-align: center;
+    background-color: #ff40805a;
+}
+
+// Size of Logo
+.mat-card{
+    width:250px;
+    height:55px;
+}
+
+// Pos and Size of 3 buttons
+.mat-flat-button{
+    text-align: right;
+    width: 250px;
+}
+
+// Size and overlay of icons
+.material-icons{
+    font-size: 24px;
+    position: absolute; 
+}
+
+// Position of the clickable icons
+#icon-1{
+    top: 141px;
+    left: 3%;
+}
+#icon-2{
+    top: 177px;
+    left: 3%;
+}
+#icon-3{
+    top: 213px;
+    left: 3%;
+}
+

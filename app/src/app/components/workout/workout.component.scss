@@ -100,5 +100,24 @@
     margin-left: 8px;
   }
 
-.img-thumbnail {
+.thumbsup{
+    position: absolute;
+    right: 80px;
+}
+
+.thumbsdown{
+    position: absolute;
+    right: 50px;
+}
+
+.bigup {
+    position: absolute;
+    left: 300px;
+    font-size: 10em;
+}
+
+.bigdown {
+    position: absolute;
+    right: 500px;
+    font-size: 10em;
 }
