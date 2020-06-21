@@ -1,3 +1,18 @@
 <!-- <app-login class=""></app-login> -->
+<mat-sidenav-container>
 
-<app-register class=""></app-register>
+  <mat-sidenav
+  mode="side"
+  opened
+  class = 'sidenav'
+  fixedInViewport = 'true'
+  >
+    <app-sidebar
+    ></app-sidebar>
+  </mat-sidenav>
+
+  <mat-sidenav-content routerLink = 'registration'>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
