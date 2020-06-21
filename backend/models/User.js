@@ -9,7 +9,7 @@ const User = mongoose.Schema({
     workoutDuration : {type : Number, default : 5},
     history:[{
         date : Date,// must not include hours or minutes
-        workouts : [{type : Date, value : [String]}], 
+        workouts : [{time : Date, value : [String]}], 
         default : []
     }],
     blacklist:{default : [String], default : []}

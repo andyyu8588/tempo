@@ -1,20 +1,24 @@
 <!-- <app-login class=""></app-login> -->
 <mat-sidenav-container>
 
+
+<app-register class=""></app-register>
+
+<app-workout></app-workout>
   <mat-sidenav
   mode="side"
   opened
   class = 'sidenav'
   fixedInViewport = 'true'
+  *ngIf="checkLogin()"
   >
     <app-sidebar
     ></app-sidebar>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <div class="container-fluid">
-      <router-outlet></router-outlet>
-    </div>
+    <app-register *ngIf='!checkLogin()'></app-register>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 
 </mat-sidenav-container>

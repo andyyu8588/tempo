@@ -82,6 +82,7 @@ export class RegisterComponent implements OnInit {
         localStorage.setItem('username', this.registrationForm.get('username').value)
         localStorage.setItem('password', this.registrationForm.get('passwords.password').value)
         this.stepper.next()
+        console.log(localStorage.getItem('username'))
       } else {
         this.responseStatus = true
         this.responseMessage = response.message
