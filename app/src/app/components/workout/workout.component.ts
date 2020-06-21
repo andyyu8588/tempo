@@ -1,7 +1,17 @@
+import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from './../../services/http.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WorkoutService } from './../../services/workout.service'
+import { MatTreeNestedDataSource, MatTreeModule } from '@angular/material/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatAccordion } from '@angular/material/expansion';
+
+export class Node {
+  children: Node[]
+  type: string
+  name: string
+}
 
 @Component({
   selector: 'app-workout',
@@ -9,9 +19,13 @@ import { WorkoutService } from './../../services/workout.service'
   styleUrls: ['./workout.component.scss']
 })
 export class WorkoutComponent implements OnInit {
+  // workout stuff
   done: boolean = false;
   first: boolean = true;
   pause: boolean = false;
+  progress: boolean = false;
+  workout: any
+  WIP: any
 
   // Start with an initial value of 20 seconds
   TIME_LIMIT = 20;
@@ -40,10 +54,74 @@ export class WorkoutComponent implements OnInit {
 
   remainingPathColor = this.COLOR_CODES.info.color;
 
-  constructor(private HttpService: HttpService, private HttpClient: HttpClient, private WorkoutService : WorkoutService) { }
+  // expansion stuff
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+
+  // tree stuff
+  nestedTreeControl: NestedTreeControl<Node>
+  nestedDataSource: MatTreeNestedDataSource<Node>
+  dataChange: BehaviorSubject<Node[]> = new BehaviorSubject<Node[]>([]);
+
+  constructor(private HttpService: HttpService, private HttpClient: HttpClient, private WorkoutService : WorkoutService) {
+    this.nestedTreeControl = new NestedTreeControl<Node>(this._getChildren)
+    this.nestedDataSource = new  MatTreeNestedDataSource()
+    this.dataChange.subscribe((data) => {
+      this.nestedDataSource.data = data
+    })
+
+    this.dataChange.next([
+      {
+        name: "folder",
+        type: "",
+        children: [
+          {
+            name: "test3",
+            type: "asd",
+            children: [],
+          }
+        ],
+      },
+      {
+        name: "folder",
+        type: "",
+        children: [
+          {
+            name: "test3",
+            type: "asd",
+            children: [],
+          }
+        ],
+      },
+      {
+        name: "folder",
+        type: "",
+        children: [
+          {
+            name: "test3",
+            type: "asd",
+            children: [],
+          }
+        ],
+      },
+      {
+        name: "test2",
+        type: "asd",
+        children: [],
+      },
+    ])
+   }
 
   ngOnInit(): void {
+    this.createWorkout()
   }
+
+  private _getChildren = (node: Node) => {
+    return observableOf(node.children)
+  } 
+
+  hasNestedChild = (_: number, nodeData: Node) => {
+    return !(nodeData.type)
+  } 
 
   formatTimeLeft(time: number) {
     // The largest round integer less than or equal to the result of time divided being by 60.
@@ -71,8 +149,10 @@ export class WorkoutComponent implements OnInit {
   }
 
   startTimer() {
+    this.progress = true;
     this.done = false;
     this.first = false;
+    this.WIP = this.workout
     this.timerInterval = setInterval(() => {
 
       // The amount of time passed increments by one
@@ -140,28 +220,20 @@ export class WorkoutComponent implements OnInit {
     }
   }
 
-  // addWorkout() {
-  //   let exerciseNames = []
-  //   this.workout.forEach((exercise) => {
-  //     exerciseNames.push(exercise.Workout)
-  //   })
-  //   this.HttpService.post('/user/exercise', {
-  //     username: 'andy123',
-  //     date: new Date().toISOString(),
-  //     time: new Date().toISOString(),
-  //     exercises: exerciseNames
-  //   }).then((res) => {
-  //     console.log(res)
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   })
-  // }
-
-  //creates workout and send
+  // creates workout and send
   createWorkout(){
-   return new Promise((resolve, reject) => {
-    console.log(this.WorkoutService.createWorkout(localStorage.getItem('username')))
+   this.WorkoutService.createWorkout(localStorage.getItem('username')).then((res) => {
+     this.workout = res
+   }).catch((err) => {
+     console.log(err)
    })
+  }
 
+  saveWorkout() {
+    this.WorkoutService.saveWorkout(this.workout, localStorage.getItem('username')).then((res) => {
+      console.log('workout saved')
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 }

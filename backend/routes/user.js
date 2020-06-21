@@ -124,30 +124,6 @@ router.get('', (req, res, next) => {
     })
 })
 
-// returns true if workout is in blacklist
-// takes in username and name
-router.get('/check', (req, res, next) => {
-    User.find({username : req.params.username}.exec((err, res) => {
-        if (err) {
-            res.status(500).json({
-                error: err
-            })
-        }
-        else {
-            if (res[0].blacklist.includes(req.params.name)) {
-                res.status(200).json({
-                    check: true
-                })
-            }
-            else {
-                res.status(200).json({
-                    check: false
-                })
-            }
-        }
-    }))
-})
-
 // verifies login
 router.get('/login', (req, res, next) => {
     console.log(req.query)
