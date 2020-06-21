@@ -77,12 +77,10 @@ export class RegisterComponent implements OnInit {
       password: this.registrationForm.get('passwords.password').value
     })
     .then((response: any) => {
-      console.log(response)
       if (!response.error) {
         localStorage.setItem('username', this.registrationForm.get('username').value)
         localStorage.setItem('password', this.registrationForm.get('passwords.password').value)
         this.stepper.next()
-        console.log(localStorage.getItem('username'))
       } else {
         this.responseStatus = true
         this.responseMessage = response.message
@@ -92,5 +90,13 @@ export class RegisterComponent implements OnInit {
       console.log(err)
       this.responseStatus = true
     })
+  }
+
+  resetState: boolean = true
+  reset() {
+    this.resetState = false
+    setTimeout(() => {
+      this.resetState = true
+    }, 500)
   }
 }

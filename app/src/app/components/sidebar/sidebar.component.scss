@@ -1,7 +1,14 @@
 mat-card{
   height: 100px;
 }
+
 button{
   height: 150px;
   font-size: large;
+}
+
+app-logout {
+  position: absolute;
+  bottom: 1%;
+  left: 2%;
 }
