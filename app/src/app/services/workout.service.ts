@@ -33,46 +33,49 @@ export class WorkoutService implements OnDestroy{
     let chosenWorkout = []
     //get preferences of user from database
     this.HttpService.get('/user', {username : username}).then(data=>{
-      console.log(data)
       // creates array of possible exercises using user preferences
       dataset.forEach(exercise => {
-        if (data['user'][0].difficulty == exercise.Difficulty && data['user'][0].equipment.includes(exercise.Equipment) && data['user'][0].type.includes(dataset.Type)){
-          //check blacklist
-          if (!data['user'][0].blacklist.includes(exercise)){
-            possibleWorkout.push(exercise)}
-          }
-        for (var time = 0; time < data['user'][0].duration; time++){
-          //push exercises randomly according to timeframe
-          let newExercise = possibleWorkout[Math.floor(Math.random()*(possibleWorkout.length-1))]// gets random exercise from array
-          if (!chosenWorkout.includes(newExercise)){
-            //avoids duplicate
-            chosenWorkout.push(newExercise)
+        if (data['user'][0].difficulty.includes(exercise.Difficulty)){
+          if(data['user'][0].equipment.includes(exercise.Equipment)){
+            if(data['user'][0].bodyPart.includes(exercise.Main)){
+              if (!data['user'][0].blacklist.includes(exercise.Workout)){          //check blacklist
+                possibleWorkout.push(exercise)
+              }
+            }
           }
         }
-        //need to save chosen workout to the database
-        let exerciseNames = []
-        chosenWorkout.forEach((exercise) => {
-          exerciseNames.push(exercise.Workout)
-        })
-        //saves current workout to user database
-        let workoutInfo = {
-          username : username,
-          date : new Date().toLocaleDateString(),
-          time : new Date().toLocaleTimeString(),
-          exercices : exerciseNames
+      });
+      for (var time = 0; time < data['user'][0].workoutDuration; time++){
+        //push exercises randomly according to timeframe
+        let newExercise = possibleWorkout[Math.floor(Math.random()*(possibleWorkout.length-1))]// gets random exercise from array
+        if (!chosenWorkout.includes(newExercise)){
+          //avoids duplicate
+          chosenWorkout.push(newExercise)
         }
-        this.HttpService.post('user/exercise',{
-          workoutInfo
-        }).then((res) => {
-          console.log(res)
-        }).catch((err) => {
-          console.log(err)
-        })
-
-        return (chosenWorkout)
-        });
+      }
+      console.log(chosenWorkout)
+      return chosenWorkout
     })
   }
+  saveWorkout(chosenWorkout, username){
+    //save chosen workout to the database
+    let exercises = []
+    chosenWorkout.forEach((exercise) => {
+      exercises.push(exercise.Workout)
+    })
+    console.log(exercises)
+    //saves current workout to user database
+    this.HttpService.post('/user/exercise',{
+      username : username,
+      date : new Date().toLocaleDateString(),
+      time : new Date().toLocaleTimeString(),
+      exercises : exercises
+    }).then((res) => {
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
+    })
+}
   ngOnDestroy(){
     this._Workout.unsubscribe()
   }

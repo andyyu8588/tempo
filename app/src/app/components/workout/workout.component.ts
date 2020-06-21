@@ -157,10 +157,11 @@ export class WorkoutComponent implements OnInit {
   //   })
   // }
 
-  //creates workout
+  //creates workout and send
   createWorkout(){
+   return new Promise((resolve, reject) => {
     console.log(this.WorkoutService.createWorkout(localStorage.getItem('username')))
-    // console.log((localStorage.getItem('username')))
+   })
 
   }
 }
