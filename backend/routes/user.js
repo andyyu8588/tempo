@@ -31,7 +31,7 @@ router.post('/create', (req, res, next) => {
 router.post('/preferences', (req, res, next) => {
     User.findOneAndUpdate({username : req.body.username},
         {$set: {difficulty: req.body.difficulty,
-                equipment: req.body.equipment.append("Body Only"),
+                equipment: req.body.equipment,
                 bodyPart: req.body.bodyPart,
                 workoutDuration: req.body.workoutDuration}})
     .exec((err, user) => {

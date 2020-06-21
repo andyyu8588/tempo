@@ -127,6 +127,7 @@ export class RegisterComponent implements OnInit {
 
   preferenceClick() {
     console.log(this._muscleGroups)
+    this._equipment.push('Body Only')
     // if (localStorage.getItem('username')) {
       this.HttpService.post('/user/preferences', {
         username: 'andy123',
