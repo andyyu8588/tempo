@@ -1,7 +1,7 @@
-<button mat-raised-button (click)='clicked()'> change view </button>
-
-
-<ngx-charts-bar-vertical-2d class
+<button mat-raised-button (click)='toggleView()' *ngIf="clicked"> go back </button>
+<ngx-charts-bar-vertical-2d
+*ngIf="!clicked"
+class
 [view]="view"
 [scheme]="colorScheme"
 [results]="results"
@@ -10,5 +10,31 @@ legendTitle='workouts'
 xAxis='true'
 yAxies='true'
 showXAxisLabel='true'
-showYAxisLabel='true'>
+showYAxisLabel='true'
+(select)='selected($event)'
+>
 </ngx-charts-bar-vertical-2d>
+
+<div *ngIf="clicked" class="container">
+  <h1> workouts of {{ date}}</h1>
+  <ngx-charts-line-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [results] = "data"
+  showXAxisLabel="true"
+  showYAxisLabel="true"
+  xAxis="time period"
+  yAxis="# workouts"
+  xAxisLabel="time period"
+  yAxisLabel="# workouts"
+  timeline="true"
+  (select)='selectWorkout($event)'
+  >
+  </ngx-charts-line-chart>
+</div>
+
+<div *ngIf="selectedWorkout">
+  <h1 *ngFor="let item of this.chosenWorkout">
+    -{{item}}
+  </h1>
+</div>
