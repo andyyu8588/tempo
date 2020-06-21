@@ -64,7 +64,8 @@
         </div> -->
     </mat-step>
     <mat-step [stepControl]="" label="My Preferences" [optional]="true">
-            <mat-card class="">
+        <app-settings class=""></app-settings>
+            <!-- <mat-card class="">
                 <mat-card-content class="container-fluid">
                     <div class="row">
                         <mat-label class="font-weight-bold" color='primary'>
@@ -126,8 +127,9 @@
                 </mat-card-content>
             </mat-card>
       <div>
-        <button mat-button routerLink='/myaccount' (click)='preferenceClick()' class="font-weight-light">Skip</button>
-        <button mat-button routerLink>Done</button>
-      </div>
+        <button mat-button routerLink (click)='preferenceClick()'>Done</button>
+      </div> -->
+      <button mat-button routerLink class="font-weight-light">Skip this step</button>
+
     </mat-step>
   </mat-horizontal-stepper>
