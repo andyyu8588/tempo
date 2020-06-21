@@ -49,6 +49,8 @@ import { AnalysisComponent } from './components/analysis/analysis.component';
 import { WorkoutComponent } from './components/workout/workout.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { NgxElectronModule } from 'ngx-electron';
+import { LogoutComponent } from './components/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     AnalysisComponent,
     WorkoutComponent,
     RegisterComponent,
-    SidebarComponent
+    SidebarComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +110,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     MatFormFieldModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxElectronModule
   ],
   providers: [],
   bootstrap: [AppComponent]

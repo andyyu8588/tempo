@@ -1,6 +1,9 @@
 const { app, BrowserWindow, ipcMain, Menu, shell, Tray, application } = require('electron')
 const AutoLaunch = require('auto-launch')
 const fs = require('fs')
+const path = require('path')
+
+var userPath = path.join(app.getPath('userData'), 'data.json')
 
 var window = null
 
@@ -98,6 +101,18 @@ app.on('quit', () => {
   if (app.isQuitting) {
     tray.destroy()
   }
+})
+
+ipcMain.on('set', (event, arg) => {
+  console.log(arg)
+  fs.writeFileSync(userPath, JSON.stringify(arg))
+  event.returnValue = 'set ok'
+})
+
+ipcMain.on('get', (event, arg) => {
+  console.log(arg)
+  data = fs.readFileSync(userPath)
+  event.returnValue = data
 })
 
 ipcMain.on('toggleStartup', (event, arg) => {

@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { StorageService } from './../../services/storage.service';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 import { MatStep, MatStepper } from '@angular/material/stepper';
 import { HttpResponse } from '@angular/common/http';
 
@@ -22,8 +21,9 @@ export class RegisterComponent implements OnInit {
   checkPasswordValidity: boolean
 
   responseStatus: boolean = false
+  responseMessage: string
 
-  constructor(private HttpService: HttpService, private http: HttpClient) { }
+  constructor(private HttpService: HttpService, private StorageService: StorageService) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -76,13 +76,15 @@ export class RegisterComponent implements OnInit {
       username: this.registrationForm.get('username').value,
       password: this.registrationForm.get('passwords.password').value
     })
-    .then((response: HttpResponse<any>) => {
+    .then((response: {[key: string]: any}) => {
       console.log(response)
       if (response.status == 200) {
-        // localStorage.setItem('username', this.registrationForm.get('username').value)
+        localStorage.setItem('username', this.registrationForm.get('username').value)
+        localStorage.setItem('password', this.registrationForm.get('passwords.password').value)
         this.stepper.next()
       } else {
         this.responseStatus = true
+        this.responseMessage = response.message
       }
     })
     .catch(err => {

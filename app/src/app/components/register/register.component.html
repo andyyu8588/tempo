@@ -57,7 +57,7 @@
                 </mat-checkbox>
             </div>
             <button mat-button type='submit' id='submit' class='btn btn-primary' aria-required='true'>Register</button>
-            <small id="passwordHelpBlock" class="text-danger" *ngIf="responseStatus">There was an error processing your request</small>
+            <small id="passwordHelpBlock" class="text-danger" *ngIf="responseStatus">There was an error processing your request: {{ responseMessage }}</small>
         </form>
         <!-- <div>
             <button mat-button matStepperNext class="btn btn-primary" (click)='registerClick()'>Register</button>
@@ -65,71 +65,6 @@
     </mat-step>
     <mat-step [stepControl]="" label="My Preferences" [optional]="true">
         <app-settings class=""></app-settings>
-            <!-- <mat-card class="">
-                <mat-card-content class="container-fluid">
-                    <div class="row">
-                        <mat-label class="font-weight-bold" color='primary'>
-                           Workout Difficulty:
-                        </mat-label>
-                        <mat-select [(value)]='selectedDifficulty' class="col">
-                            <mat-option value='Beginner'>
-                                Beginner
-                            </mat-option>
-                            <mat-option value='Intermediate'>
-                                Intermediate
-                            </mat-option>
-                            <mat-option value='Advanced'>
-                                Advanced
-                            </mat-option>
-                        </mat-select> 
-                        <mat-label class="font-weight-bold">
-                            <button mat-button color="primary">Available Equipment:</button>
-                        </mat-label>
-                        <br>
-                        <section class="example-section col">
-                            <span *ngFor='let equip of equipment'>
-                                <mat-checkbox class="example-margin" (change)='changeEquip(equip)'>{{ equip }}</mat-checkbox>
-                                &nbsp; &nbsp;
-                            </span>
-                        </section>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="">
-                <mat-card-content class="">
-                    <mat-label>
-                        <button mat-button color="accent">Prefered Muscle Groups</button>
-                    </mat-label>
-                    <br>
-                    <section class="example-section">
-                        <span *ngFor='let muscle of muscleGroups'>
-                            <mat-checkbox (change)='changeMuscle(muscle)'>
-                                {{ muscle }}
-                            </mat-checkbox>
-                            &nbsp; &nbsp;
-                        </span>
-                        
-                    </section>
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="">
-                <mat-card-content class="">
-                    <mat-label>
-                        <button mat-button color="primary">Workout Duration:</button>
-                    <button mat-flat-button color="primary">
-                      {{ slider.value }} min
-                    </button> 
-                    </mat-label>
-                    <br>
-                    <section class="example-section">
-                        <mat-slider #slider thumbLabel='true' [displayWith]='formatLabel' min="1" max="60" value='10'></mat-slider>
-                    </section>
-                </mat-card-content>
-            </mat-card>
-      <div>
-        <button mat-button routerLink (click)='preferenceClick()'>Done</button>
-      </div> -->
       <button mat-button routerLink class="font-weight-light">Skip this step</button>
-
     </mat-step>
   </mat-horizontal-stepper>

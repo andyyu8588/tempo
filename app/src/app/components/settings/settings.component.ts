@@ -1,3 +1,4 @@
+import { StorageService } from './../../services/storage.service';
 import { HttpResponse } from '@angular/common/http';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,10 +12,10 @@ export class SettingsComponent implements OnInit {
   responseStatus: boolean = false
 
   selectedDifficulty: any = 'Intermediate'
-  muscleGroups: any[] = ['Abs','Back','Biceps','Chest','Forearm', 'Glutes', 'Shoulders', 'Triceps', 'Upper Legs', 'Lower Legs', 'Cardio']
+  muscleGroups: any[]
   private _muscleGroups: any[] = []
 
-  equipment: any[] = ['Bands', 'Barbell', 'Bench', 'Dumbbell', 'Exercise Ball', 'EZ - Bar', 'Foam Roll', 'Kettlebell', 'Machine - Cardio', 'Machine - Strength', 'Pull Bar', 'Weight Plate']
+  equipment: any[]
   private _equipment: any[] = []
 
   time: number = 10
@@ -28,9 +29,11 @@ export class SettingsComponent implements OnInit {
     return value;
   }
 
-  constructor(private HttpService: HttpService) { }
+  constructor(private HttpService: HttpService, private StorageService: StorageService) { }
 
   ngOnInit(): void {
+    this.muscleGroups = ['Abs','Back','Biceps','Chest','Forearm', 'Glutes', 'Shoulders', 'Triceps', 'Upper Legs', 'Lower Legs', 'Cardio']
+    this.equipment = ['Bands', 'Barbell', 'Bench', 'Dumbbell', 'Exercise Ball', 'EZ - Bar', 'Foam Roll', 'Kettlebell', 'Machine - Cardio', 'Machine - Strength', 'Pull Bar', 'Weight Plate']
   }
 
   changeMuscle(value: string) {
@@ -71,4 +74,8 @@ export class SettingsComponent implements OnInit {
     // }
   }
 
+  cancel() {
+    this._equipment = []
+    this.ngOnInit()
+  }
 }

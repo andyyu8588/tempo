@@ -20,7 +20,7 @@ router.post('/create', (req, res, next) => {
                 message: `Success! ${req.body.username} has been created.`
             })
         } else {
-            res.status(200).json({
+            res.status(202).json({
                 message: 'user exists'
             })
         }
