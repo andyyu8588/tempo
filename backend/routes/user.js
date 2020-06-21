@@ -69,13 +69,12 @@ router.post('/add', (req, res, next) => {
 router.post('/exercise', (req, res, next) => {
     User.findOne({username : req.body.username}, (err, result) => {
         if (err) {
-            res.status(500).json({
-                error: err
-            })
-        }
+                res.status(500).json({
+                    error: err
+                })
+            }
         else {
-            console.log(req.body)
-            if (result.history.length == 0) {
+            if (result.history.length == 0) {//first instantiation
                 result.history.push({
                     date : req.body.date,
                     workouts : [{time : req.body.time, value : req.body.exercises}],
@@ -84,8 +83,9 @@ router.post('/exercise', (req, res, next) => {
                 res.status(200).json({
                     message: `Success! Workout added!`
                 })   
-            }
+            }//appends to current day
             else if (result.history[result.history.length-1].date == req.body.date) {
+                console.log('appended to current history')
                 result.history[result.history.length-1].workouts.push(
                     {type : req.body.time, value : req.body.exercises}
                 )
@@ -95,7 +95,7 @@ router.post('/exercise', (req, res, next) => {
                 })
             }
             else { //create new history
-                console.log('c')
+                console.log('new history created')
                 result.history.push({
                     date : req.body.date,
                     workouts : [{type : req.body.time, value : req.body.exercises}],
@@ -104,8 +104,7 @@ router.post('/exercise', (req, res, next) => {
                 res.status(200).json({
                     message: `Success! Workout added!`
                 })                    
-            }
-            
+            }       
         }
     })
 })
