@@ -111,8 +111,8 @@ router.post('/exercise', (req, res, next) => {
 })
 
 // returns the user, takes in the username
-router.get('/', (req, res, next) => {
-    User.find({username : req.params.username}, (err, result) => {
+router.get('', (req, res, next) => {
+    User.find({username : req.query.username}, (err, result) => {
         if (err) {
             res.status(500).json({
                 error: err

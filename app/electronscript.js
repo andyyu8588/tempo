@@ -39,7 +39,7 @@ function createWindow() {
     const win = new BrowserWindow({
       width: 1920,
       height: 1080,
-      title: "asdasd",
+      title: "Tempo",
       webPreferences: {
         nodeIntegration: true
       }
@@ -50,8 +50,8 @@ function createWindow() {
     win.loadFile('./dist/app/index.html')
 
     // Open the DevTools.
-    // win.webContents.openDevTools()
-    
+    win.webContents.openDevTools()
+
     resolve(win)
   })
 }
