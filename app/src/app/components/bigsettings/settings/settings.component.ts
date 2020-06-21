@@ -22,7 +22,7 @@ export class SettingsComponent implements OnInit {
   private _equipment: any[] = []
 
   time: number = 10
-  timeout: any = '1'
+  timeout: number = 60
 
   formatLabel(value: number) {
     this.time = value
@@ -41,13 +41,11 @@ export class SettingsComponent implements OnInit {
 
     this.HttpService.get('/user', {username: localStorage.getItem('username')})
     .then((user: {[key: string]: any}) => {
-      console.log(user.user[0])
       let obj = user.user[0]
       this.selectedDifficulty = obj.difficulty
       this._equipment = obj.equipment
       this._muscleGroups = obj.bodyPart
       this.time = obj.workoutDuration
-      console.log(this.time, this.selectedDifficulty, this._equipment)
     })
     .catch(err => {
       this.responseStatus = true

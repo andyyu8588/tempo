@@ -80,12 +80,12 @@
         <mat-label>
             <button mat-button color="primary">Time Between Workouts:</button>
         <button mat-flat-button color="primary">
-          {{ timeout.value | timepipe }}
+          {{ timer.value | timepipe }}
         </button> 
         </mat-label>
         <br>
         <section class="example-section">
-            <mat-slider #timeout [displayWith]='' min="1" max="1440" value='1'></mat-slider>
+            <mat-slider #timer min="1" max="1440" [value]='timeout'></mat-slider>
         </section>
     </mat-card-content>
 </mat-card>
