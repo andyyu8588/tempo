@@ -1,3 +1,5 @@
+<!-- timer -->
+
 <div class="base-timer">
     <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <g class="base-timer__circle">
@@ -15,22 +17,51 @@
         ></path>
       </g>
     </svg>
-    <span *ngIf="!done" id="base-timer-label" class="base-timer__label">
+    <span *ngIf="!done && !first" id="base-timer-label" class="base-timer__label">
       {{ formatTimeLeft(this.timeLeft) }}
+    </span>
+    <span *ngIf="first" id="base-timer-label" class="base-timer__label">
+      1:00
     </span>
     <span *ngIf="done" class="base-timer__label">
         Done!
     </span>
 </div>
 
-<button *ngIf="done || first" mat-button (click)="startTimer()">Start!</button>
+<!-- start, pause, resume buttons -->
+
+<button *ngIf="(done || first) && !rating" mat-button (click)="startTimer()">Start!</button>
 <button *ngIf="!done && !pause && !first" mat-button (click)="pauseTimer()">Pause</button>
 <button *ngIf="!done && pause && !first" mat-button (click)="resumeTimer()">Resume</button>
 
-<!-- <button mat-button (click)="createWorkout()">create a Workout</button> -->
-<button mat-button (click)="saveWorkout()">Save</button>
+<!-- ratings -->
 
-<div *ngIf="progress">      
+<div *ngIf="rating && hiddenWorkout.length != 0">
+  <div class="example-action-buttons">
+    <button mat-button (click)="accordion.openAll()">Expand All</button>
+    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+  </div>
+  Rate your exercises!
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel *ngFor="let exercise of hiddenWorkout">
+      <mat-expansion-panel-header>
+        {{exercise.Workout}}
+      </mat-expansion-panel-header>
+      <button (click)="up(exercise)"><img src="assets/img/up.png"></button>
+      <button (click)="down(exercise)"><img src="assets/img/down.png"></button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<!-- when there's no more ratings -->
+
+<div *ngIf="rating && hiddenWorkout.length == 0">
+  No more Rantings!
+</div>
+
+<!-- while in the workout -->
+
+<div *ngIf="progress && !rating">      
     {{WIP[0].Workout}}    
     <div *ngIf="WIP[0].Demonstration_1" class="img-thumbnail">
       <img [src]="WIP[0].Demonstration_1">
@@ -52,6 +83,8 @@
     Instructions: {{WIP[0].Instructions}} <br>
 </div>
 
+<!-- workout preview -->
+
 <div *ngIf="!progress">
   <div class="example-action-buttons">
     <button mat-button (click)="accordion.openAll()">Expand All</button>
@@ -63,13 +96,13 @@
         {{exercise.Workout}}
       </mat-expansion-panel-header>
       <div *ngIf="exercise.Demonstration_1" class="img-thumbnail">
-        <img [src]="exercise.Demonstration_1">
+        <img [src]="exercise.Demonstration_1" alt="JEFIT error">
       </div>
       <div *ngIf="exercise.Demonstration_2" class="img-thumbnail">
-        <img [src]="exercise.Demonstration_2">
+        <img [src]="exercise.Demonstration_2" alt="JEFIT error">
       </div>
       <div *ngIf="exercise.Demonstration_3" class="img-thumbnail">
-        <img [src]="exercise.Demonstration_3">
+        <img [src]="exercise.Demonstration_3" alt="JEFIT error">
       </div>
       Main: {{exercise.Main}} <br>
       <div *ngIf="exercise.Detailed">
@@ -83,30 +116,3 @@
     </mat-expansion-panel>
   </mat-accordion>
 </div>
-
-
-
-<!-- <mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="example-tree">
-  <mat-tree-node *matTreeNodeDef="let node">
-      <li class="mat-tree-node">
-          <button mat-icon-button disabled></button>
-          {{node.name}}
-      </li>
-  </mat-tree-node>
-
-  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
-      <li>
-          <div class="mat-tree-node">
-              <button mat-icon-button matTreeNodeToggle>
-                  <mat-icon class="mat-icon-rtl-mirror">
-                      {{nestedTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                  </mat-icon>
-              </button>
-              {{node.name}}
-          </div>
-          <ul [class.example-tree-invisible]="!nestedTreeControl.isExpanded(node)">
-              <ng-container matTreeNodeOutlet></ng-container>
-          </ul>
-      </li>
-  </mat-nested-tree-node>
-</mat-tree> -->
