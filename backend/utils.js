@@ -53,26 +53,25 @@ const checkBlacklisted = (data) => {
 //update user history
 //takes in object containing username, date, time and exercises
 const updateHistory = (data) => {
-    User.findOne({username : data.username},(err,res)=>{
-        if (err){
+    User.findOne({username : data.username}, (err,res) => {
+        if (err) {
             console.log(err)
         }
-        else{
-            if (res[0]){//append workout to history
-                if (res[0].history[history.length-1].date == data.date){
+        else {
+            if (res[0]) {//append workout to history
+                if (res[0].history[history.length-1].date == data.date) {
                     res[0].history[history.length-1].workouts.push(
                         {type : data.time, value : data.exercises}
                     )
                     res.save()
                     
                 }
-                else{//create new history
+                else {//create new history
                     res[0].history.append({
                         date : data.date,
                         workouts : [{type : data.time, value : data.exercises}],
                     })
-                    res.save()
-                    
+                    res.save()                    
                 }
             }
         }

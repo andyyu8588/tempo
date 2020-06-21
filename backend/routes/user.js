@@ -27,11 +27,11 @@ router.post('/create', (req, res, next) => {
     })
 })
 
-// adds new user to the database upon registration
+// sets user preferences
 router.post('/preferences', (req, res, next) => {
     User.findOneAndUpdate({username : req.body.username},
         {$set: {difficulty: req.body.difficulty,
-                equipment: req.body.equipment,
+                equipment: req.body.equipment.append("Body Only"),
                 bodyPart: req.body.bodyPart,
                 workoutDuration: req.body.workoutDuration}})
     .exec((err, user) => {
@@ -65,22 +65,32 @@ router.post('/add', (req, res, next) => {
     })
 })
 
-// // adds exercise
-// router.post('/exercise', (req, res, next) => {
-//     User.findOneAndUpdate({username : req.body.username},
-//         {$push: {blacklist : req.body.name}}, (err) => {
-//             if (err) {
-//                 res.status(500).json({
-//                     message: err
-//                 })
-//             }
-//             else {
-//                 res.status(200).json({
-//                     message: `Success! ${req.body.name} added to ${req.body.username} blacklist!`
-//                 })
-//             }
-//     })  
-// )
+// adds exercise
+router.post('/exercise', (req, res, next) => {
+    User.findOne({username : data.username}, (err, res) => {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            if (res[0]) {//append workout to history
+                if (res[0].history[history.length-1].date == data.date) {
+                    res[0].history[history.length-1].workouts.push(
+                        {type : data.time, value : data.exercises}
+                    )
+                    res.save()
+                    
+                }
+                else {//create new history
+                    res[0].history.append({
+                        date : data.date,
+                        workouts : [{type : data.time, value : data.exercises}],
+                    })
+                    res.save()                    
+                }
+            }
+        }
+    })
+})
 
 // returns the user, takes in the username
 router.get('/', (req, res, next) => {
