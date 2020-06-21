@@ -11,13 +11,8 @@ router.post('/create', (req, res, next) => {
             })
         } else if (result.length == 0) {
             const user = new User({
-                email : req.body.email,
                 username : req.body.username,
-                password : req.body.password,
-                firstname : req.body.firstname,
-                lastname : req.body.lastname,
-                birthdate : req.body.birthdate,
-                gender : req.body.gender  
+                password : req.body.password  
             })
             console.log('user created!')
             user.save()
