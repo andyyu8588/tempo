@@ -21,12 +21,12 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
   constructor(private SessionService: SessionService,
               private StorageService: StorageService,
               private ElectronService: ElectronService){
-    if (this.StorageService.get()) {
-      console.log(this.StorageService.get())
+    // if (this.StorageService.get()) {
+    //   console.log(this.StorageService.get())
       
-    } else {
-      localStorage.clear()
-    }
+    // } else {
+    //   localStorage.clear()
+    // }
   }
 
   ngOnInit() {

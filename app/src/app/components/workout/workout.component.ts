@@ -22,14 +22,16 @@ export class WorkoutComponent implements OnInit {
   // workout stuff
   done: boolean = false;
   first: boolean = true;
+  loading: boolean = false;
   pause: boolean = false;
   progress: boolean = false;
-  hiddenWorkout: any
+  rating: boolean = false;
+  hiddenWorkout = []
   workout: any
   WIP: any
 
   // Start with an initial value of 20 seconds
-  TIME_LIMIT = 20;
+  TIME_LIMIT = 2;
   WARNING_THRESHOLD = 10;
   ALERT_THRESHOLD = 5;
 
@@ -141,20 +143,25 @@ export class WorkoutComponent implements OnInit {
     let secondsString;
 
     // If the value of seconds is less than 10, then display seconds with a leading zero
-    if (seconds < 0) {
+    if (this.loading) {
+      console.log('asd') 
+      return "Next!"
+    } else if (seconds < 0) {
       return "Done!"
     } else if (seconds == 0) {
       this.stopTimer()
+      return 'Next'
     } else if (seconds < 10) {
       secondsString = `0${seconds}`;
+      this.setRemainingPathColor(this.timeLeft)
+      // The output in MM:SS format
+      return `${minutes}:${secondsString}`;
     } else {
       secondsString = seconds;
-    }
-
-    this.setRemainingPathColor(this.timeLeft)
-
-    // The output in MM:SS format
-    return `${minutes}:${secondsString}`;
+      this.setRemainingPathColor(this.timeLeft)
+      // The output in MM:SS format
+      return `${minutes}:${secondsString}`;
+    }    
   }
 
   startTimer() {
@@ -177,10 +184,13 @@ export class WorkoutComponent implements OnInit {
 
   nextExercise() {
     if (this.WIP.length == 1) {
-
+      this.WIP.shift()
+      this.saveWorkout()
+      this.rating = true
     } else {
       this.done = false;
       this.WIP.shift()
+      this.loading = false
       this.timerInterval = setInterval(() => {
 
         // The amount of time passed increments by one
@@ -195,6 +205,7 @@ export class WorkoutComponent implements OnInit {
   }
 
   stopTimer() {
+    this.loading = true;
     this.done = true;
     this.timeLeft = this.TIME_LIMIT
     this.timePassed = 0
@@ -254,7 +265,10 @@ export class WorkoutComponent implements OnInit {
   createWorkout(){
    this.WorkoutService.createWorkout(localStorage.getItem('username')).then((res) => {
      this.workout = res
-     this.hiddenWorkout = res
+     this.workout.forEach((exercise) => {
+       this.hiddenWorkout.push(exercise)
+     })
+     console.log(this.hiddenWorkout)
    }).catch((err) => {
      console.log(err)
    })
@@ -265,6 +279,20 @@ export class WorkoutComponent implements OnInit {
       console.log('workout saved')
     }).catch((err) => {
       console.log(err)
+    })
+  }
+
+  up(exercise) {
+    this.hiddenWorkout.splice(this.hiddenWorkout.indexOf(exercise), 1)
+  }
+
+  down(exercise) {
+    this.hiddenWorkout.splice(this.hiddenWorkout.indexOf(exercise), 1)
+    this.HttpService.post('/user/add', {
+      username: localStorage.getItem('username'),
+      name: exercise.Workout
+    }).then((res) => {
+      console.log('blacklisted')
     })
   }
 }

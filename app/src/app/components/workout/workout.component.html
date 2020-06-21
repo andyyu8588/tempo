@@ -23,14 +23,35 @@
     </span>
 </div>
 
-<button *ngIf="done || first" mat-button (click)="startTimer()">Start!</button>
+<button *ngIf="(done || first) && !rating" mat-button (click)="startTimer()">Start!</button>
 <button *ngIf="!done && !pause && !first" mat-button (click)="pauseTimer()">Pause</button>
 <button *ngIf="!done && pause && !first" mat-button (click)="resumeTimer()">Resume</button>
 
 <!-- <button mat-button (click)="createWorkout()">create a Workout</button> -->
-<button mat-button (click)="saveWorkout()">Save</button>
+<!-- <button mat-button (click)="saveWorkout()">Save</button> -->
 
-<div *ngIf="progress">      
+<div *ngIf="rating && hiddenWorkout.length != 0">
+  <div class="example-action-buttons">
+    <button mat-button (click)="accordion.openAll()">Expand All</button>
+    <button mat-button (click)="accordion.closeAll()">Collapse All</button>
+  </div>
+  Rate your exercises!
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel *ngFor="let exercise of hiddenWorkout">
+      <mat-expansion-panel-header>
+        {{exercise.Workout}}
+      </mat-expansion-panel-header>
+      <button (click)="up(exercise)"><img src="assets/img/up.png"></button>
+      <button (click)="down(exercise)"><img src="assets/img/down.png"></button>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div *ngIf="rating && hiddenWorkout.length == 0">
+  No more Rantings!
+</div>
+
+<div *ngIf="progress && !rating">      
     {{WIP[0].Workout}}    
     <div *ngIf="WIP[0].Demonstration_1" class="img-thumbnail">
       <img [src]="WIP[0].Demonstration_1">
@@ -63,13 +84,13 @@
         {{exercise.Workout}}
       </mat-expansion-panel-header>
       <div *ngIf="exercise.Demonstration_1" class="img-thumbnail">
-        <img [src]="exercise.Demonstration_1">
+        <img [src]="exercise.Demonstration_1" alt="JEFIT error">
       </div>
       <div *ngIf="exercise.Demonstration_2" class="img-thumbnail">
-        <img [src]="exercise.Demonstration_2">
+        <img [src]="exercise.Demonstration_2" alt="JEFIT error">
       </div>
       <div *ngIf="exercise.Demonstration_3" class="img-thumbnail">
-        <img [src]="exercise.Demonstration_3">
+        <img [src]="exercise.Demonstration_3" alt="JEFIT error">
       </div>
       Main: {{exercise.Main}} <br>
       <div *ngIf="exercise.Detailed">
