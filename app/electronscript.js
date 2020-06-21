@@ -198,19 +198,17 @@ ipcMain.on('state', (event, arg) => {
 
 ipcMain.on('timeout', (event, arg) => {
   console.log('got timeout', arg)
-  window.webContents.send('timeAlert', {msg:'timesUp'})
-  // timer = setInterval(() => {
-  //   window.webContents.send('timeAlert', {msg:'timesUp'})
-  // }, arg*60000)
+  timer = setInterval(() => {
+    window.webContents.send('timeAlert', {msg:'timesUp'})
+  }, arg*60000)
 
-  // // stop when user is idle, check every 5 min
-  // setInterval(() => {
-  //   let time = powerMonitor.getSystemIdleTime()
-  //   if (time >= 900) {
-  //     clearInterval(timer)
-  //   } else if (time <= 310) {
-      
-  //   }
-  // }, 300000)
+  // stop/start when on user idle, check every 5 min
+  setInterval(() => {
+    let time = powerMonitor.getSystemIdleTime()
+    if (time >= 900) {
+      clearInterval(timer)
+    } else if (time <= 310) {
+    }
+  }, 300000)
 
 })
