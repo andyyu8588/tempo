@@ -1,6 +1,7 @@
+import { TimerService } from './services/timer.service';
 import { SessionService } from './services/session.service';
 import { RegisterComponent } from './components/register/register.component';
-import { Component, ViewChild, OnInit, OnDestroy, AfterContentInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy, AfterContentInit, DoCheck } from '@angular/core';
 import { MatHorizontalStepper } from '@angular/material/stepper';
 import { Subscription } from 'rxjs';
 
@@ -9,19 +10,24 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, DoCheck, OnDestroy {
   title = 'Tempo';
 
   private _state: Subscription
   state: boolean = true
 
-  constructor(private SessionService: SessionService){
+  constructor(private SessionService: SessionService,
+              private TimerService: TimerService){
   }
 
   ngOnInit() {
     this._state = this.SessionService.state.subscribe(bool => {
       this.state = bool
     })
+  }
+
+  ngDoCheck() {
+    this.TimerService.check()
   }
 
   checkLogin(): boolean {
