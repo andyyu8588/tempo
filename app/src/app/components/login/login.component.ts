@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
             credentials.username,
             credentials.password
           )
+          this.SessionService.getTimeout()
         } else {
           this.responseStatus = true
           this.responseMessage = response.message

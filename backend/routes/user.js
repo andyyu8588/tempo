@@ -33,7 +33,8 @@ router.post('/preferences', (req, res, next) => {
         {$set: {difficulty: req.body.difficulty,
                 equipment: req.body.equipment,
                 bodyPart: req.body.bodyPart,
-                workoutDuration: req.body.workoutDuration}})
+                workoutDuration: req.body.workoutDuration,
+                timeout: req.body.timeout}})
     .exec((err, user) => {
         if (err) {
             res.status(500).json({

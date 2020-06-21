@@ -1,3 +1,4 @@
+import { HttpService } from './services/http.service';
 import { ElectronService } from 'ngx-electron';
 import { StorageService } from './services/storage.service';
 import { TimerService } from './services/timer.service';
@@ -18,12 +19,14 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
 
   constructor(private SessionService: SessionService,
               private StorageService: StorageService,
-              private ElectronService: ElectronService) 
+              private ElectronService: ElectronService,
+              private HttpService: HttpService) 
   {
     let data: {[key: string]: any} = this.StorageService.get()
     if (data.username) {
       localStorage.setItem('username', data.username)
       localStorage.setItem('password', data.password)
+      SessionService.getTimeout()
     } else {
       console.log('undefined')
       localStorage.clear()

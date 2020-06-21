@@ -29,8 +29,8 @@ export class SettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   private _time: Subscription
   private _timeout: Subscription
-  time: number = 10
-  timeout1: number = 60
+  time: number
+  timeout1: number
 
   onStartup: boolean
 
@@ -39,15 +39,8 @@ export class SettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
               private TimerService: TimerService,
               private SessionService: SessionService) {
 
-    this.onStartup = this.ElectronService.ipcRenderer.sendSync('startup')
-
-
-  }
-
-  ngOnInit(): void {
-    this.muscleGroups = ['Abs','Back','Biceps','Chest','Forearm', 'Glutes', 'Shoulders', 'Triceps', 'Upper Legs', 'Lower Legs', 'Cardio']
-    this.equipment = ['Bands', 'Barbell', 'Bench', 'Dumbbell', 'Exercise Ball', 'EZ - Bar', 'Foam Roll', 'Kettlebell', 'Machine - Cardio', 'Machine - Strength', 'Pull Bar', 'Weight Plate']
     // importing user preferences
+    this.onStartup = this.ElectronService.ipcRenderer.sendSync('startup')
     this.HttpService.get('/user', {username: localStorage.getItem('username')})
     .then((user: {[key: string]: any}) => {
       let obj = user.user[0]
@@ -60,6 +53,13 @@ export class SettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
     .catch(err => {
       this.responseStatus = true
     })
+
+  }
+
+  ngOnInit(): void {
+    this.muscleGroups = ['Abs','Back','Biceps','Chest','Forearm', 'Glutes', 'Shoulders', 'Triceps', 'Upper Legs', 'Lower Legs', 'Cardio']
+    this.equipment = ['Bands', 'Barbell', 'Bench', 'Dumbbell', 'Exercise Ball', 'EZ - Bar', 'Foam Roll', 'Kettlebell', 'Machine - Cardio', 'Machine - Strength', 'Pull Bar', 'Weight Plate']
+
   }
 
   ngAfterViewChecked() {
@@ -116,9 +116,9 @@ export class SettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
   
   onSubmit() {
-    console.log(this._muscleGroups)
     this._equipment.push('Body Only')
     this.responseStatus, this.updateStatus = false
+    console.log(this.interval.value)
     this.HttpService.post('/user/preferences', {
       username: localStorage.getItem('username'),
       difficulty: this.selectedDifficulty,
@@ -128,10 +128,10 @@ export class SettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
       timeout: this.interval.value
     })
     .then((response: HttpResponse<any>) => {
-      console.log(response)
       if (response) {
         this.updateStatus = true
-        this.SessionService.login(localStorage.getItem('username'), localStorage.getItem('password'), this.timeout1)
+        this.SessionService.login(localStorage.getItem('username'), localStorage.getItem('password'))
+        this.SessionService.getTimeout()
       }
     })
     .catch(err => {
