@@ -150,26 +150,25 @@ router.get('/check', (req, res, next) => {
 
 // verifies login
 router.get('/login', (req, res, next) => {
-    User.find({username : req.query.username}, (err, result) => {
+    console.log(req.query)
+    User.find({$and: [{username: req.query.username}, {password: req.query.password}]}, (err, result) => {
+        console.log(result)
         if (err) {
             res.status(500).json({
                 status: 500,
                 error: err
             })
+        } else if (result.length) {
+            res.status(200).json({
+                status: 200,
+                check: true
+            })
         } else {
-            if (result[0].password == req.query.password) {
-                console.log('b')
-                res.status(200).json({
-                    status: 200,
-                    check: true
-                })
-            }
-            else {
-                res.status(202).json({
-                    status: 202,
-                    check: false
-                })
-            }
+            res.status(202).json({
+                message: 'username or password incorrect',
+                status: 202,
+                check: false
+            })
         }
     })
 })

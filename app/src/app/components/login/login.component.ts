@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   //handle user login
   loginClicked() {
     if (!(localStorage.getItem('username'))) {
+      this.responseMessage, this.responseStatus = null
       let credentials = {
         username: this.loginForm.get('username').value,
         password: this.loginForm.get('password').value
@@ -43,7 +44,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('password', this.loginForm.get('password').value)
         } else {
           this.responseStatus = true
-          this.responseMessage = response
+          this.responseMessage = response.message
           this.login_err = true
         }
       })

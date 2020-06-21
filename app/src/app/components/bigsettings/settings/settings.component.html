@@ -6,13 +6,16 @@
                Workout Difficulty:
             </mat-label>
             <mat-select [(value)]='selectedDifficulty' class="col">
+                <mat-option value='All'>
+                    All
+                </mat-option>
                 <mat-option value='Beginner'>
                     Beginner
                 </mat-option>
                 <mat-option value='Intermediate'>
                     Intermediate
                 </mat-option>
-                <mat-option value='Advanced'>
+                <mat-option value='Expert'>
                     Advanced
                 </mat-option>
             </mat-select> 
@@ -22,7 +25,7 @@
             <br>
             <section class="example-section col">
                 <span *ngFor='let equip of equipment'>
-                    <mat-checkbox class="example-margin" (change)='changeEquip(equip)'>{{ equip }}</mat-checkbox>
+                    <mat-checkbox class="example-margin" [checked]='equipCheck(equip)' (change)='changeEquip(equip)'>{{ equip }}</mat-checkbox>
                     &nbsp; &nbsp;
                 </span>
             </section>
@@ -38,7 +41,7 @@
         <br>
         <section class="example-section">
             <span *ngFor='let muscle of muscleGroups'>
-                <mat-checkbox (change)='changeMuscle(muscle)'>
+                <mat-checkbox [checked]='muscleCheck(muscle)' (change)='changeMuscle(muscle)'>
                     {{ muscle }}
                 </mat-checkbox>
                 &nbsp; &nbsp;
@@ -53,12 +56,12 @@
         <mat-label>
             <button mat-button color="primary">Workout Duration:</button>
         <button mat-flat-button color="primary">
-          {{ slider.value }} min
+          {{ time }} min
         </button> 
         </mat-label>
         <br>
         <section class="example-section">
-            <mat-slider #slider thumbLabel='true' [displayWith]='formatLabel' min="1" max="60" value='10'></mat-slider>
+            <mat-slider thumbLabel='true' [displayWith]='formatLabel' min="1" max="60" [value]='time'></mat-slider>
         </section>
     </mat-card-content>
 </mat-card>
@@ -88,5 +91,8 @@
 </mat-card>
 <br>
 <div>
-    <button mat-button routerLink (click)='preferenceClick()'>Done</button>
+    <button mat-raised-button color='primary' (click)='onSubmit()'>Save</button>
+    &nbsp;
+    <small *ngIf='updateStatus' class="">Settings updated!</small>
 </div>
+<br>

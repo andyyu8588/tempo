@@ -17,7 +17,7 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
   state: boolean = true
 
   constructor(private SessionService: SessionService,
-              private TimerService: TimerService){
+              ){
   }
 
   ngOnInit() {
@@ -27,7 +27,6 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   ngDoCheck() {
-    this.TimerService.check()
   }
 
   checkLogin(): boolean {

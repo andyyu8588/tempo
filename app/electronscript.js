@@ -156,12 +156,12 @@ ipcMain.on('toggleStartup', (event, arg) => {
 ipcMain.on('state', (event, arg) => {
   if (arg == true) {
     event.returnValue = {
-      state: powerMonitor.getSystemIdleState(60),
+      state: powerMonitor.getSystemIdleState(36000),
       time: powerMonitor.getSystemIdleTime()
     }
   } else {
     event.returnValue = {
-      state: powerMonitor.getSystemIdleState(60)
+      time: powerMonitor.getSystemIdleTime()
     }
   }
 })
