@@ -12,7 +12,7 @@ const User = mongoose.Schema({
         workouts : [{time : Date, value : [String]}], 
         default : []
     }],
-    blacklist:{default : [String], default : []}
+    blacklist:{type : [String], default : []}
 })
 
 module.exports = mongoose.model('User', User)

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit } from '@angular/core';
+import { WorkoutService } from './../../services/workout.service'
 
 @Component({
   selector: 'app-workout',
@@ -11,22 +12,6 @@ export class WorkoutComponent implements OnInit {
   done: boolean = false;
   first: boolean = true;
   pause: boolean = false;
-  workout = [
-    {
-      "Workout": "90 90 Hamstring ",
-      "Demonstration_1": "https://www.jefit.com/images/exercises/800_600/1860.jpg",
-      "Demonstration_2": "https://www.jefit.com/images/exercises/800_600/1861.jpg",
-      "Demonstration_3": "",
-      "Main": "Upper Legs",
-      "Detailed": "Hamstrings",
-      "Other": "",
-      "Type": "Stretching",
-      "Mechanic": "N/A",
-      "Equipment": "Body Only",
-      "Difficulty": "Beginner",
-      "Muscle_img": "https://www.jefit.com/images/exercises/b8.jpg",
-      "Instructions": "Steps : \n\n1.) To begin this exercise; start off lying flat on your back with one leg extended out and with your other leg bend it and grab the knee with your hands.\n\n2.) Take the leg that is being bent and extend it straight into the air and hold onto the position for up to 15 seconds and then alternate legs.\n\n3.) Repeat this exercise for as many repetitions as needed"
-    }]
 
   // Start with an initial value of 20 seconds
   TIME_LIMIT = 20;
@@ -52,10 +37,10 @@ export class WorkoutComponent implements OnInit {
       threshold: this.ALERT_THRESHOLD
     }
   };
-  
+
   remainingPathColor = this.COLOR_CODES.info.color;
 
-  constructor(private HttpService: HttpService, private HttpClient: HttpClient) { }
+  constructor(private HttpService: HttpService, private HttpClient: HttpClient, private WorkoutService : WorkoutService) { }
 
   ngOnInit(): void {
   }
@@ -63,11 +48,11 @@ export class WorkoutComponent implements OnInit {
   formatTimeLeft(time: number) {
     // The largest round integer less than or equal to the result of time divided being by 60.
     const minutes = Math.floor(time / 60);
-    
+
     // Seconds are the remainder of the time divided by 60 (modulus operator)
     let seconds = time % 60;
     let secondsString;
-    
+
     // If the value of seconds is less than 10, then display seconds with a leading zero
     if (seconds < 0) {
       return "Done!"
@@ -80,7 +65,7 @@ export class WorkoutComponent implements OnInit {
     }
 
     this.setRemainingPathColor(this.timeLeft)
-  
+
     // The output in MM:SS format
     return `${minutes}:${secondsString}`;
   }
@@ -89,11 +74,11 @@ export class WorkoutComponent implements OnInit {
     this.done = false;
     this.first = false;
     this.timerInterval = setInterval(() => {
-      
+
       // The amount of time passed increments by one
       this.timePassed = this.timePassed += 1;
       this.timeLeft = this.TIME_LIMIT - this.timePassed;
-      
+
       // The time left label is updated
       document.getElementById("base-timer-label").innerHTML = this.formatTimeLeft(this.timeLeft);
       this.setCircleDasharray();
@@ -134,7 +119,7 @@ export class WorkoutComponent implements OnInit {
 
   setRemainingPathColor(timeLeft: number) {
     const { alert, warning, info } = this.COLOR_CODES;
-  
+
     // If the remaining time is less than or equal to 5, remove the "warning" class and apply the "alert" class.
     if (timeLeft <= alert.threshold) {
       document
@@ -143,7 +128,7 @@ export class WorkoutComponent implements OnInit {
       document
         .getElementById("base-timer-path-remaining")
         .classList.add(alert.color);
-  
+
     // If the remaining time is less than or equal to 10, remove the base color and apply the "warning" class.
     } else if (timeLeft <= warning.threshold) {
       document
@@ -155,20 +140,27 @@ export class WorkoutComponent implements OnInit {
     }
   }
 
-  addWorkout() {
-    let exerciseNames = []
-    this.workout.forEach((exercise) => {
-      exerciseNames.push(exercise.Workout)
-    })
-    this.HttpService.post('/user/exercise', {
-      username: 'andy123',
-      date: new Date().toISOString(),
-      time: new Date().toISOString(),
-      exercises: exerciseNames
-    }).then((res) => {
-      console.log(res)
-    }).catch((err) => {
-      console.log(err)
-    })
+  // addWorkout() {
+  //   let exerciseNames = []
+  //   this.workout.forEach((exercise) => {
+  //     exerciseNames.push(exercise.Workout)
+  //   })
+  //   this.HttpService.post('/user/exercise', {
+  //     username: 'andy123',
+  //     date: new Date().toISOString(),
+  //     time: new Date().toISOString(),
+  //     exercises: exerciseNames
+  //   }).then((res) => {
+  //     console.log(res)
+  //   }).catch((err) => {
+  //     console.log(err)
+  //   })
+  // }
+
+  //creates workout
+  createWorkout(){
+    console.log(this.WorkoutService.createWorkout(localStorage.getItem('username')))
+    // console.log((localStorage.getItem('username')))
+
   }
 }
