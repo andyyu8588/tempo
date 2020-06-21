@@ -5,7 +5,6 @@ const User = require("../models/User")
 // adds new user to the database upon registration
 router.post('/create', (req, res, next) => {
     User.find({username : req.body.username}, (err, result) => {
-        console.log(result)
         if (err) {
             res.status(500).json({
                 message: err
@@ -26,6 +25,26 @@ router.post('/create', (req, res, next) => {
             })
         }
     })
+})
+
+// adds new user to the database upon registration
+router.post('/preferences', (req, res, next) => {
+    User.findOneAndUpdate({username : req.body.username},
+        {$set: {difficulty: req.body.difficulty,
+                equipment: req.body.equipment,
+                bodyPart: req.body.bodyPart,
+                workoutDuration: req.body.workoutDuration}})
+    .exec((err, user) => {
+        if (err) {
+            res.status(500).json({
+                message: err
+            })
+        } else {
+            res.status(200).json({
+                message: `Success! ${req.body.username} now has preferences.`
+            })
+        }            
+    })    
 })
 
 // adds a workout the the user blacklist
