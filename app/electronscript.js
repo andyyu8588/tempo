@@ -122,11 +122,11 @@ ipcMain.on('set', (event, arg) => {
       'username': null,
       'password': null,
     }), () => {
-      event.returnValue = 'delete ok'  
+      event.returnValue = 'delete ok'
     })
   } else {
     fs.writeFile(userPath, JSON.stringify(arg), (err) => {
-      event.returnValue = 'set ok'  
+      event.returnValue = 'set ok'
     })
   }
 
@@ -197,19 +197,19 @@ ipcMain.on('state', (event, arg) => {
   }
 })
 
-ipcMain.on('timeout', (event, arg) => {
-  timer = setInterval(() => {
-    ipcMain.emit('timeAlert', {})
-  }, arg*60000)
+// ipcMain.on('timeout', (event, arg) => {
+//   timer = setInterval(() => {
+//     ipcMain.emit('timeAlert', {})
+//   }, arg*60000)
 
   // stop when user is idle, check every 5 min
-  setInterval(() => {
-    let time = powerMonitor.getSystemIdleTime()
-    if (time >= 900) {
-      clearInterval(timer)
-    } else if (time <= 310) {
-      
-    }
-  }, 300000)
+//   setInterval(() => {
+//     let time = powerMonitor.getSystemIdleTime()
+//     if (time >= 900) {
+//       clearInterval(timer)
+//     } else if (time <= 310) {
 
-})
+//     }
+//   }, 300000)
+
+// })

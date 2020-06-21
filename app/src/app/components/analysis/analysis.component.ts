@@ -1,6 +1,7 @@
 import { HttpService } from './../../services/http.service';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { Component, OnInit } from '@angular/core';
+import { rejects } from 'assert';
 
 @Component({
   selector: 'app-analysis',
@@ -8,36 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./analysis.component.scss']
 })
 export class AnalysisComponent implements OnInit {
-results:any = [
-  {
-    "name": "Germany",
-    "series": [
-      {
-        "name": "2010",
-        "value": 7300000
-      },
-      {
-        "name": "2011",
-        "value": 8940000
-      }
-    ]
-  },
-
-  {
-    "name": "USA",
-    "series": [
-      {
-        "name": "2010",
-        "value": 7870000
-      },
-      {
-        "name": "2011",
-        "value": 8270000
-      }
-    ]
-  }
-]
-  view: any[] = [window.innerWidth*0.90,window.innerHeight]
+  results:any
+  data: any
+  view: any[] = [window.innerWidth*0.60,window.innerHeight]
   colorScheme = {
     domain: ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
     '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -52,40 +26,96 @@ results:any = [
   }
 
   constructor(private HttpService: HttpService) { }
-
+  clicked : boolean = false
   ngOnInit(): void {
-    this.results = this.getData()
+    // this.results = this.getData()
+    this.viewResult1().then(res=>{
+      this.results = res
+    }).catch((err)=>{
+      console.log(err)
+    })
   }
-  clicked(){
-    console.log(localStorage.getItem('username'))
-    console.log(this.results)
+  toggleView(){
+    console.log('view changed')
+    this.clicked = !this.clicked
   }
-  getData() {
 
-    let username = localStorage.getItem('username')
+  viewResult1() {
+    return new Promise((resolve, reject)=>{
+      let username = localStorage.getItem('username')
     this.HttpService.get('/user', {username: username}).then((data: any) => {
-      console.log(data)
       let history = data.user[0].history
-      console.log(history)
       let series = []
-      history.forEach(days => {
-        let name = (history.indexOf(days)+1).stringify() // day (1,2,3,4...)
-        let date = (days.date)//gets given date
-        let value = (days.workouts.length).stringify() // number of workouts done that day
+      history.forEach(day => {
+        let name = 'day ' + (history.indexOf(day)+1).toString() // day (1,2,3,4...)
+        let date= (day.date)//gets given date
+        let value = (day.workouts.length) // number of workouts done that day
         series.push({
+          username : username,
           name : name,
           date : date,
           value : value,
         })
       });
       let output = [{
-        'name' : "workout",
+        'name' : "days",
         'series' : series
       }]
-      return output
+      resolve(output)
 
     }).catch((err) => {
       console.log(err)
     })
+  })
   }
+
+date : string = null
+  selected(event){
+    this.clicked = true
+    console.log(this.clicked)
+    this.date = event.date
+    this.HttpService.get('/user', {username: event.username}).then((data: any) => {
+      let history = data.user[0].history
+      let series = []
+      history.forEach(day => {
+        if (day.date == this.date){
+          let workoutArray = [0]
+
+          day.workouts.forEach(timePeriod => {
+            if (timePeriod.value){
+              workoutArray.push(1 + workoutArray[workoutArray.length-1])
+            }
+            else{
+              workoutArray.push(workoutArray[workoutArray.length-1])
+            }
+            let name = timePeriod.time
+            let workout = timePeriod.value
+            let value = workoutArray[workoutArray.length-1]
+            series.push({
+            name : name,// must replace with right name
+            workout : workout,
+            value : value,
+            })
+          });
+
+        }
+      });
+      let output = [{
+        'name' : 'workouts',
+        'series' : series
+      }]
+      this.data = output
+      console.log(output)
+
+    })
+  }
+selectedWorkout : boolean = false
+chosenWorkout : any
+  selectWorkout(event){
+    this.chosenWorkout = event.workout
+    this.selectedWorkout = true
+  }
+
 }
+
+
