@@ -1,5 +1,5 @@
 <mat-horizontal-stepper linear #stepper>
-    <mat-step #step1 label='Create Your Account' [editable]='editable' [optional]="false">
+    <mat-step #step1 label='Create Your Account' [editable]='editable' [optional]="true">
         <form
             ngbAutofocus
             class='modal-body'
@@ -12,41 +12,43 @@
             <mat-form-field appearance="outline" class='form-group' id="username">
                 <mat-label for='username'>Username</mat-label>
                 <input matInput formControlName='username' placeholder="Enter a Username" autocomplete="off">
-                <small id="passwordHelpBlock" class="text-danger" *ngIf="checkUsernameUse()">This username is already in use.</small>
+                <small id="passwordHelpBlock" class="text-danger" *ngIf="checkUsernameUse">This username is already in use.</small>
                 <small id="passwordHelpBlock" class="text-danger" *ngIf="checkUsernameLength()">Your username must be between 2 and 15 characters long.</small>
             </mat-form-field>
+
             <!-- password confirmation -->
             <div formGroupName='passwords' class="row">
                 <!-- password -->
                 <mat-form-field appearance="outline" class='form-group col-6'>
-                <mat-label for='password'>Password</mat-label>
-                <input matInput
-                placeholder="Enter a password"
-                formControlName='password'
-                [type]="hide ? 'password' : 'text'">
-                <button mat-button
-                type='button'
-                mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
+                    <mat-label for='password'>Password</mat-label>
+                    <input matInput
+                        placeholder="Enter a password"
+                        formControlName='password'
+                        [type]="hide ? 'password' : 'text'">
+                    <button mat-button
+                        type='button'
+                        mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 </mat-form-field>
                 <!-- confirm password -->
                 <mat-form-field appearance="outline" class='form-group col-6'>
-                <mat-label for='password'>confirm your password</mat-label>
-                <input matInput
-                placeholder="confirm your password"
-                formControlName='confirmPassword'
-                [type]="hide ? 'password' : 'text'">
-                <button
-                type="button"
-                mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
+                    <mat-label for='password'>confirm your password</mat-label>
+                    <input matInput
+                        placeholder="confirm your password"
+                        formControlName='confirmPassword'
+                        [type]="hide ? 'password' : 'text'">
+                    <button
+                        type="button"
+                        mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 </mat-form-field>
+                <small id="passwordHelpBlock" class="text-danger" *ngIf="checkPasswordValidity">your passwords do not match</small>
+                <small id="passwordHelpBlock" class="text-danger" *ngIf="checkPasswordLength()">your password should be between 5-15 characters</small>
             </div>
-            <small id="passwordHelpBlock" class="text-danger" *ngIf="checkPasswordValidity">your passwords do not match</small>
-            <small id="passwordHelpBlock" class="text-danger" *ngIf="checkPasswordLength()">your password should be between 5-15 characters</small>
+            
             <!-- checkbox -->
             <div>
                 <mat-checkbox class='form-group'
@@ -54,15 +56,78 @@
                 <label class='form-check-label' for='terms'>I have read and understand the terms & conditions of this agreement</label>
                 </mat-checkbox>
             </div>
-            <button mat-button matStepperNext  type='submit' id='submit' class='btn btn-primary' aria-required='true'>Register</button>
+            <button mat-button type='submit' id='submit' class='btn btn-primary' aria-required='true'>Register</button>
+            <small id="passwordHelpBlock" class="text-danger" *ngIf="responseStatus">There was an error processing your request</small>
         </form>
         <!-- <div>
             <button mat-button matStepperNext class="btn btn-primary" (click)='registerClick()'>Register</button>
         </div> -->
     </mat-step>
     <mat-step [stepControl]="" label="My Preferences" [optional]="true">
+            <mat-card class="">
+                <mat-card-content class="container-fluid">
+                    <div class="row">
+                        <mat-label class="font-weight-bold" color='primary'>
+                           Workout Difficulty:
+                        </mat-label>
+                        <mat-select [(value)]='selectedDifficulty' class="col">
+                            <mat-option value='Beginner'>
+                                Beginner
+                            </mat-option>
+                            <mat-option value='Intermediate'>
+                                Intermediate
+                            </mat-option>
+                            <mat-option value='Advanced'>
+                                Advanced
+                            </mat-option>
+                        </mat-select> 
+                        <mat-label class="font-weight-bold">
+                            <button mat-button color="primary">Available Equipment:</button>
+                        </mat-label>
+                        <br>
+                        <section class="example-section col">
+                            <span *ngFor='let equip of equipment'>
+                                <mat-checkbox class="example-margin" >{{ equip }}</mat-checkbox>
+                                &nbsp; &nbsp;
+                            </span>
+                        </section>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="">
+                <mat-card-content class="">
+                    <mat-label>
+                        <button mat-button color="accent">Prefered Muscle Groups</button>
+                    </mat-label>
+                    <br>
+                    <section class="example-section">
+                        <span *ngFor='let muscle of muscleGroups'>
+                            <mat-checkbox >
+                                {{ muscle }}
+                            </mat-checkbox>
+                            &nbsp; &nbsp;
+                        </span>
+                        
+                    </section>
+                </mat-card-content>
+            </mat-card>
+            <mat-card class="">
+                <mat-card-content class="">
+                    <mat-label class="strong">
+                        <button mat-button color="primary">Workout Duration:</button>
+                    <button mat-flat-button color="primary">
+                      {{ slider.value }} min
+                    </button> 
+                    </mat-label>
+                    <br>
+                    <section class="example-section">
+                        <mat-slider #slider thumbLabel='true' [displayWith]='formatLabel' min="1" max="60" value='10'></mat-slider>
+                    </section>
+                </mat-card-content>
+            </mat-card>
       <div>
-        <button mat-button routerLink='/myaccount'>Skip</button>
+        <button mat-button routerLink='/myaccount' (click)='preferenceClick()'>Skip</button>
+        <button mat-button routerLink>Done</button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>
