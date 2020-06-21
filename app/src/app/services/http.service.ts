@@ -22,7 +22,7 @@ export class HttpService {
           authorization: localStorage.getItem('token') ? localStorage.getItem('token').toString() : 'monkas'
         },
         params
-      }).subscribe((res: HttpResponse<any>) => {
+      }).subscribe((res: any) => {
         resolve(res)
       }, (err) => {
         reject(err)
@@ -38,7 +38,7 @@ export class HttpService {
           authorization: localStorage.getItem('token') ? localStorage.getItem('token').toString() : 'monkas'
         },
         params
-      }).subscribe((res: HttpResponse<any>) => {
+      }).subscribe((res: any) => {
         resolve(res)
       }, (err) => {
         reject(err)
@@ -68,7 +68,7 @@ export class HttpService {
           authorization: localStorage.getItem('token') ? localStorage.getItem('token').toString() : 'monkas'
         },
         params
-      }).subscribe((res: HttpResponse<any>) => {
+      }).subscribe((res: any) => {
         resolve(res)
       }, (err) => {
         reject(err)

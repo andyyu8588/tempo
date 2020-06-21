@@ -1,8 +1,7 @@
 import { ElectronService } from 'ngx-electron';
-import { StorageService } from './../../services/storage.service';
 import { HttpResponse } from '@angular/common/http';
-import { HttpService } from './../../services/http.service';
-import { Component, OnInit } from '@angular/core';
+import { HttpService } from './../../../services/http.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-settings',
@@ -13,6 +12,7 @@ export class SettingsComponent implements OnInit {
   responseStatus: boolean = false
 
   selectedDifficulty: any = 'Intermediate'
+
   muscleGroups: any[]
   private _muscleGroups: any[] = []
 
@@ -27,7 +27,6 @@ export class SettingsComponent implements OnInit {
     if (value >= 60) {
       return Math.round(value / 1);
     }
-
     return value;
   }
 
@@ -87,8 +86,5 @@ export class SettingsComponent implements OnInit {
     } else {
       this.onStartup = !this.onStartup
     }
-  }
-
-  cancel() {
   }
 }

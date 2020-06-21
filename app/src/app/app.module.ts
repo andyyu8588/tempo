@@ -44,7 +44,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SettingsComponent } from './components/settings/settings.component';
+import { SettingsComponent } from './components/bigsettings/settings/settings.component';
 import { AnalysisComponent } from './components/analysis/analysis.component';
 import { WorkoutComponent } from './components/workout/workout.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -52,6 +52,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NgxElectronModule } from 'ngx-electron';
 import { LogoutComponent } from './components/logout/logout.component';
 import { TimepipePipe } from './services/timepipe.pipe';
+import { BigsettingsComponent } from './components/bigsettings/bigsettings.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { TimepipePipe } from './services/timepipe.pipe';
     RegisterComponent,
     SidebarComponent,
     LogoutComponent,
-    TimepipePipe
+    TimepipePipe,
+    BigsettingsComponent
   ],
   imports: [
     BrowserModule,

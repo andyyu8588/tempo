@@ -77,7 +77,6 @@
         <mat-label>
             <button mat-button color="primary">Time Between Workouts:</button>
         <button mat-flat-button color="primary">
-            <!-- pipe needed -->
           {{ timeout.value | timepipe }}
         </button> 
         </mat-label>
@@ -89,6 +88,5 @@
 </mat-card>
 <br>
 <div>
-    <button mat-button (click)='cancel()'>Cancel</button>
     <button mat-button routerLink (click)='preferenceClick()'>Done</button>
 </div>
