@@ -1,0 +1,68 @@
+<mat-horizontal-stepper linear #stepper>
+    <mat-step #step1 label='Create Your Account' [editable]='editable' [optional]="false">
+        <form
+            ngbAutofocus
+            class='modal-body'
+            id='form'
+            (ngSubmit)="onSubmit()"
+            [formGroup]='registrationForm'>
+            <h1 class='modal-title'>Registration</h1>
+            <hr>
+            <!-- username -->
+            <mat-form-field appearance="outline" class='form-group' id="username">
+                <mat-label for='username'>Username</mat-label>
+                <input matInput formControlName='username' placeholder="Enter a Username" autocomplete="off">
+                <small id="passwordHelpBlock" class="text-danger" *ngIf="checkUsernameUse()">This username is already in use.</small>
+                <small id="passwordHelpBlock" class="text-danger" *ngIf="checkUsernameLength()">Your username must be between 2 and 15 characters long.</small>
+            </mat-form-field>
+            <!-- password confirmation -->
+            <div formGroupName='passwords' class="row">
+                <!-- password -->
+                <mat-form-field appearance="outline" class='form-group col-6'>
+                <mat-label for='password'>Password</mat-label>
+                <input matInput
+                placeholder="Enter a password"
+                formControlName='password'
+                [type]="hide ? 'password' : 'text'">
+                <button mat-button
+                type='button'
+                mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                </mat-form-field>
+                <!-- confirm password -->
+                <mat-form-field appearance="outline" class='form-group col-6'>
+                <mat-label for='password'>confirm your password</mat-label>
+                <input matInput
+                placeholder="confirm your password"
+                formControlName='confirmPassword'
+                [type]="hide ? 'password' : 'text'">
+                <button
+                type="button"
+                mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                </mat-form-field>
+            </div>
+            <small id="passwordHelpBlock" class="text-danger" *ngIf="checkPasswordValidity">your passwords do not match</small>
+            <small id="passwordHelpBlock" class="text-danger" *ngIf="checkPasswordLength()">your password should be between 5-15 characters</small>
+            <!-- checkbox -->
+            <div>
+                <mat-checkbox class='form-group'
+                formControlName='checkbox'>
+                <label class='form-check-label' for='terms'>I have read and understand the terms & conditions of this agreement</label>
+                </mat-checkbox>
+            </div>
+            <button mat-button matStepperNext  type='submit' id='submit' class='btn btn-primary' aria-required='true'>Register</button>
+        </form>
+        <!-- <div>
+            <button mat-button matStepperNext class="btn btn-primary" (click)='registerClick()'>Register</button>
+        </div> -->
+    </mat-step>
+    <mat-step [stepControl]="" label="My Preferences" [optional]="true">
+      <div>
+        <button mat-button routerLink='/myaccount'>Skip</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>

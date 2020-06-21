@@ -4,6 +4,7 @@ const User = require("../models/User")
 
 // adds new user to the database upon registration
 router.post('/create', (req, res, next) => {
+    console.log(req)
     User.find({username : req.params.username}, (err, result) => {
         if (err) {
             res.status(500).json({
