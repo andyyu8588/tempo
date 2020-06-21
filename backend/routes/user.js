@@ -148,4 +148,27 @@ router.get('/check', (req, res, next) => {
     }))
 })
 
+// verifies login
+router.get('/login', (req, res, next) => {
+    User.find({username : req.query.username}.exec((err, res) => {
+        if (err) {
+            res.status(500).json({
+                error: err
+            })
+        }
+        else {
+            if (res[0].password == req.params.password) {
+                res.status(200).json({
+                    check: true
+                })
+            }
+            else {
+                res.status(200).json({
+                    check: false
+                })
+            }
+        }
+    }))
+})
+
 module.exports = router
