@@ -36,6 +36,7 @@ function createWindow() {
     const win = new BrowserWindow({
       width: 1920,
       height: 1080,
+      title: "asdasd",
       webPreferences: {
         nodeIntegration: true
       }
