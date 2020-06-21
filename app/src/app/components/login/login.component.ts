@@ -39,6 +39,8 @@ export class LoginComponent implements OnInit {
         console.log(response)
         if (response.status == 200) {
           this.login_err = false
+          localStorage.setItem('username', this.loginForm.get('username').value)
+          localStorage.setItem('password', this.loginForm.get('password').value)
         } else {
           this.responseStatus = true
           this.responseMessage = response

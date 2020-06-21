@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, shell, Tray, application } = require('electron')
+const { app, BrowserWindow, ipcMain, Menu, shell, Tray, powerMonitor } = require('electron')
 const AutoLaunch = require('auto-launch')
 const fs = require('fs')
 const path = require('path')
@@ -151,4 +151,17 @@ ipcMain.on('toggleStartup', (event, arg) => {
     console.log(err)
     event.returnValue = err
   })
+})
+
+ipcMain.on('state', (event, arg) => {
+  if (arg == true) {
+    event.returnValue = {
+      state: powerMonitor.getSystemIdleState(60),
+      time: powerMonitor.getSystemIdleTime()
+    }
+  } else {
+    event.returnValue = {
+      state: powerMonitor.getSystemIdleState(60)
+    }
+  }
 })
