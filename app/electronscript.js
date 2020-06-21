@@ -105,14 +105,19 @@ app.on('quit', () => {
 
 ipcMain.on('set', (event, arg) => {
   console.log(arg)
-  fs.writeFileSync(userPath, JSON.stringify(arg))
-  event.returnValue = 'set ok'
+  if (arg.destroy) {
+    fs.writeFileSync(userPath, JSON.stringify({}))
+  } else {
+    fs.writeFileSync(userPath, JSON.stringify(arg))
+    event.returnValue = 'set ok'  
+  }
+
 })
 
 ipcMain.on('get', (event, arg) => {
   console.log(arg)
   data = fs.readFileSync(userPath)
-  event.returnValue = data
+  event.returnValue = JSON.parse(data)
 })
 
 ipcMain.on('startup', (event, arg) => {

@@ -12,7 +12,7 @@ export class StorageService {
     return this.ElectronService.ipcRenderer.sendSync('set', value)
   }
 
-  get(value: any): any {
+  get(value?: any): any {
     return this.ElectronService.ipcRenderer.sendSync('get', value)
   }
 }

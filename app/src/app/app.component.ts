@@ -1,3 +1,5 @@
+import { ElectronService } from 'ngx-electron';
+import { StorageService } from './services/storage.service';
 import { TimerService } from './services/timer.service';
 import { SessionService } from './services/session.service';
 import { RegisterComponent } from './components/register/register.component';
@@ -17,7 +19,14 @@ export class AppComponent implements OnInit, DoCheck, OnDestroy {
   state: boolean = true
 
   constructor(private SessionService: SessionService,
-              ){
+              private StorageService: StorageService,
+              private ElectronService: ElectronService){
+    if (this.StorageService.get()) {
+      console.log(this.StorageService.get())
+      
+    } else {
+      localStorage.clear()
+    }
   }
 
   ngOnInit() {

@@ -56,12 +56,12 @@
         <mat-label>
             <button mat-button color="primary">Workout Duration:</button>
         <button mat-flat-button color="primary">
-          {{ time }} min
+          {{ workout.value }} min
         </button> 
         </mat-label>
         <br>
         <section class="example-section">
-            <mat-slider thumbLabel='true' [displayWith]='formatLabel' min="1" max="60" [value]='time'></mat-slider>
+            <mat-slider #workout min="1" max="60" [value]='time'></mat-slider>
         </section>
     </mat-card-content>
 </mat-card>

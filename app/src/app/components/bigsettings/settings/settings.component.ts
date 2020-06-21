@@ -13,7 +13,7 @@ export class SettingsComponent implements OnInit {
   responseStatus: boolean = false
   updateStatus: boolean = false
 
-  selectedDifficulty: string = 'Beginner'
+  selectedDifficulty = 'Beginner'
 
   muscleGroups: any[]
   private _muscleGroups: any[] = []
