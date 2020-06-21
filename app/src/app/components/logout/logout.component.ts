@@ -1,3 +1,4 @@
+import { StorageService } from './../../services/storage.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,13 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private StorageService: StorageService) { }
 
   ngOnInit(): void {
   }
 
   logout() {
     localStorage.clear()
+    this.StorageService.set({destroy: true})
     // window.location.reload()
   }
 

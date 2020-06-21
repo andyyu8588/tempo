@@ -104,20 +104,29 @@ app.on('quit', () => {
 })
 
 ipcMain.on('set', (event, arg) => {
-  console.log(arg)
   if (arg.destroy) {
-    fs.writeFileSync(userPath, JSON.stringify({}))
+    fs.writeFile(userPath, JSON.stringify({
+      'username': null,
+      'password': null,
+    }), () => {
+      event.returnValue = 'delete ok'  
+    })
   } else {
-    fs.writeFileSync(userPath, JSON.stringify(arg))
-    event.returnValue = 'set ok'  
+    fs.writeFile(userPath, JSON.stringify(arg), (err) => {
+      event.returnValue = 'set ok'  
+    })
   }
 
 })
 
 ipcMain.on('get', (event, arg) => {
-  console.log(arg)
-  data = fs.readFileSync(userPath)
-  event.returnValue = JSON.parse(data)
+  fs.readFile(userPath, (err, data) => {
+    if (err) {
+      console.log(err)
+    } else {
+      event.returnValue = JSON.parse(data)
+    }
+  })
 })
 
 ipcMain.on('startup', (event, arg) => {
