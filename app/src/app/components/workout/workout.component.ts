@@ -24,6 +24,7 @@ export class WorkoutComponent implements OnInit {
   first: boolean = true;
   pause: boolean = false;
   progress: boolean = false;
+  hiddenWorkout: any
   workout: any
   WIP: any
 
@@ -115,6 +116,14 @@ export class WorkoutComponent implements OnInit {
     this.createWorkout()
   }
 
+  ngOnDestroy() {
+    this.done = true;
+    this.timeLeft = this.TIME_LIMIT
+    this.timePassed = 0
+    clearInterval(this.timerInterval)
+    this.timerInterval = null;
+  }
+
   private _getChildren = (node: Node) => {
     return observableOf(node.children)
   } 
@@ -153,6 +162,7 @@ export class WorkoutComponent implements OnInit {
     this.done = false;
     this.first = false;
     this.WIP = this.workout
+    this.workout = []
     this.timerInterval = setInterval(() => {
 
       // The amount of time passed increments by one
@@ -165,12 +175,32 @@ export class WorkoutComponent implements OnInit {
     }, 1000);
   }
 
+  nextExercise() {
+    if (this.WIP.length == 1) {
+
+    } else {
+      this.done = false;
+      this.WIP.shift()
+      this.timerInterval = setInterval(() => {
+
+        // The amount of time passed increments by one
+        this.timePassed = this.timePassed += 1;
+        this.timeLeft = this.TIME_LIMIT - this.timePassed;
+  
+        // The time left label is updated
+        document.getElementById("base-timer-label").innerHTML = this.formatTimeLeft(this.timeLeft);
+        this.setCircleDasharray();
+      }, 1000);
+    }
+  }
+
   stopTimer() {
     this.done = true;
     this.timeLeft = this.TIME_LIMIT
     this.timePassed = 0
     clearInterval(this.timerInterval)
     this.timerInterval = null;
+    this.nextExercise()
   }
 
   pauseTimer() {
@@ -224,13 +254,14 @@ export class WorkoutComponent implements OnInit {
   createWorkout(){
    this.WorkoutService.createWorkout(localStorage.getItem('username')).then((res) => {
      this.workout = res
+     this.hiddenWorkout = res
    }).catch((err) => {
      console.log(err)
    })
   }
 
   saveWorkout() {
-    this.WorkoutService.saveWorkout(this.workout, localStorage.getItem('username')).then((res) => {
+    this.WorkoutService.saveWorkout(this.hiddenWorkout, localStorage.getItem('username')).then((res) => {
       console.log('workout saved')
     }).catch((err) => {
       console.log(err)
