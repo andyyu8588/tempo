@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  vision: "localhost:3000"
+  vision: "http://localhost:3000"
 };
 
 /*

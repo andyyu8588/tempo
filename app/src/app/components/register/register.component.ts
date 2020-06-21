@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -34,7 +35,7 @@ export class RegisterComponent implements OnInit {
     return value;
   }
 
-  constructor(private HttpService: HttpService) { }
+  constructor(private HttpService: HttpService, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -115,4 +116,4 @@ export class RegisterComponent implements OnInit {
       console.log(err)
     })
   }
- }
+}
