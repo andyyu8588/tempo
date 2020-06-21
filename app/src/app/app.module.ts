@@ -47,6 +47,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AnalysisComponent } from './components/analysis/analysis.component';
 import { WorkoutComponent } from './components/workout/workout.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { WorkoutComponent } from './components/workout/workout.component';
     LoginComponent,
     SettingsComponent,
     AnalysisComponent,
-    WorkoutComponent
+    WorkoutComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

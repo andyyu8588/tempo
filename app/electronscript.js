@@ -58,6 +58,7 @@ function createWindow() {
 app.whenReady().then(() => {
   createWindow()
   .then(win => {
+    win.setMenu(null)
     win.on('close', (e) => {
       if (!app.isQuitting) {
         e.preventDefault()

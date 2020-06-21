@@ -24,7 +24,7 @@ app.use('/user', userRoute)
 
 
 // set database URL:
-const dbURL = 'mongodb://localhost/test'
+const dbURL = 'mongodb+srv://andy123:123@cluster0-esicd.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority'
 
 // connect mongoose to Mongodb
 mongoose.connect(dbURL, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false}, (err) => {
