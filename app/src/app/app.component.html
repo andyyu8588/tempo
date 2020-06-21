@@ -1,23 +1,31 @@
-<!-- <app-login class=""></app-login> -->
 <mat-sidenav-container>
 
-
-<app-register class=""></app-register>
-
-<app-workout></app-workout>
+  <app-workout></app-workout>
   <mat-sidenav
-  mode="side"
-  opened
-  class = 'sidenav'
-  fixedInViewport = 'true'
-  *ngIf="checkLogin()"
+    mode="side"
+    opened
+    class = 'sidenav'
+    fixedInViewport = 'true'
+    *ngIf="checkLogin()"
   >
-    <app-sidebar
-    ></app-sidebar>
+    <app-sidebar></app-sidebar>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <app-register *ngIf='!checkLogin()'></app-register>
+    <div *ngIf='!checkLogin() && state' class="container" style="margin-top: 15%; z-index: 2;">
+      <app-login *ngIf='state'></app-login>
+
+      <div *ngIf='state'>
+        <br>
+        <hr class="hr-text" data-content="OR">
+        <br>
+        <div class="row" style="padding-left: 20%; padding-right: 20%;">
+          <button mat-raised-button color='primary' class='col' (click)='toggleState()'>Register</button>
+        </div> 
+      </div>
+    </div>
+    <app-register *ngIf='!state && !checkLogin()'></app-register>
+
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 

@@ -1,8 +1,10 @@
+import { SessionService } from './../../services/session.service';
+import { Subscription, BehaviorSubject, Observable } from 'rxjs';
 import { StorageService } from './../../services/storage.service';
 import { HttpService } from './../../services/http.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, Input, OnDestroy, AfterContentInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatStep, MatStepper } from '@angular/material/stepper';
+import { MatStep, MatStepper, MatHorizontalStepper } from '@angular/material/stepper';
 import { HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -10,10 +12,10 @@ import { HttpResponse } from '@angular/common/http';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
-  @ViewChild('stepper') stepper: MatStepper
+export class RegisterComponent implements OnInit, AfterContentInit, OnDestroy {
+  @ViewChild('stepper') stepper: MatHorizontalStepper
   @ViewChild('step1') step1: MatStep
-
+  
   registrationForm: FormGroup
   editable: boolean = true
   hide: boolean = true
@@ -23,7 +25,9 @@ export class RegisterComponent implements OnInit {
   responseStatus: boolean = false
   responseMessage: string
 
-  constructor(private HttpService: HttpService, private StorageService: StorageService) { }
+  constructor(private HttpService: HttpService,
+              private SessionService: SessionService) {
+   }
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
@@ -34,6 +38,9 @@ export class RegisterComponent implements OnInit {
       }, this.checkPasswordsMatch.bind(this)),
       'checkbox': new FormControl(null, [Validators.required]),
     })
+  }
+
+  ngAfterContentInit() {
   }
 
   checkPasswordsMatch(control: FormControl) {
@@ -94,9 +101,18 @@ export class RegisterComponent implements OnInit {
 
   resetState: boolean = true
   reset() {
+    console.log(this.stepper)
     this.resetState = false
     setTimeout(() => {
       this.resetState = true
     }, 500)
+  }
+
+  // switch between login and register
+  toggleState() {
+    this.SessionService.onStateToggle(true)
+  }
+
+  ngOnDestroy() {
   }
 }
