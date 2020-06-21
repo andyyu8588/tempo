@@ -56,12 +56,12 @@
         <mat-label>
             <button mat-button color="primary">Workout Duration:</button>
         <button mat-flat-button color="primary">
-          {{ workout.value }} min
+          {{ timer.value }} min
         </button> 
         </mat-label>
         <br>
         <section class="example-section">
-            <mat-slider #workout min="1" max="60" [value]='time'></mat-slider>
+            <mat-slider #timer min="1" max="60" [value]='time'></mat-slider>
         </section>
     </mat-card-content>
 </mat-card>
@@ -80,12 +80,12 @@
         <mat-label>
             <button mat-button color="primary">Time Between Workouts:</button>
         <button mat-flat-button color="primary">
-          {{ timer.value | timepipe }}
+          {{ timeout.value | timepipe }}
         </button> 
         </mat-label>
         <br>
         <section class="example-section">
-            <mat-slider #timer min="1" max="1440" [value]='timeout'></mat-slider>
+            <mat-slider #timeout min="1" max="1440" [value]='timeout1'></mat-slider>
         </section>
     </mat-card-content>
 </mat-card>

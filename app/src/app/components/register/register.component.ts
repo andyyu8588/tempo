@@ -85,8 +85,13 @@ export class RegisterComponent implements OnInit, AfterContentInit, OnDestroy {
     })
     .then((response: any) => {
       if (!response.error) {
+
         localStorage.setItem('username', this.registrationForm.get('username').value)
         localStorage.setItem('password', this.registrationForm.get('passwords.password').value)
+        this.SessionService.login(
+          this.registrationForm.get('username').value,
+          this.registrationForm.get('passwords.password').value
+        )
         this.stepper.next()
       } else {
         this.responseStatus = true

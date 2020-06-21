@@ -1,3 +1,5 @@
+import { SessionService } from './../../services/session.service';
+import { StorageService } from './../../services/storage.service';
 import { HttpResponse } from '@angular/common/http';
 import { HttpService } from './../../services/http.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,7 +23,9 @@ export class LoginComponent implements OnInit {
   responseStatus: boolean = false
   responseMessage: string = ''
 
-  constructor(private router: Router, private HttpService: HttpService) { }
+  constructor(private router: Router,
+              private HttpService: HttpService,
+              private SessionService: SessionService) { }
 
   ngOnInit() {
     // this.loginForm 
@@ -40,8 +44,10 @@ export class LoginComponent implements OnInit {
         console.log(response)
         if (response.status == 200) {
           this.login_err = false
-          localStorage.setItem('username', this.loginForm.get('username').value)
-          localStorage.setItem('password', this.loginForm.get('password').value)
+          this.SessionService.login(
+            credentials.username,
+            credentials.password
+          )
         } else {
           this.responseStatus = true
           this.responseMessage = response.message

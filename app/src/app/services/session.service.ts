@@ -1,3 +1,4 @@
+import { StorageService } from './storage.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 
@@ -9,9 +10,19 @@ export class SessionService {
   private _state: BehaviorSubject<boolean> = new BehaviorSubject(true)
   state: Observable<boolean> = this._state.asObservable()
 
-  constructor() { }
+  constructor(private StorageService: StorageService) { }
 
   onStateToggle(bool: boolean) {
     this._state.next(bool)
+  }
+
+  login(username: string, password: string, timeout?: number) {
+    this.StorageService.set({
+      username: username,
+      password: password,
+    })
+    localStorage.setItem('username', username)
+    localStorage.setItem('password', password)
+    localStorage.setItem('timeout', timeout? timeout.toString() : '60')
   }
 }

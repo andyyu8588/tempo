@@ -1,0 +1,21 @@
+// Pos and Size of img
+.mat-card{
+    position: relative;
+    text-align: center;
+    height:665px;
+}
+
+// Format height of img to match the card
+.mat-card-image{
+    height:665px;    
+}
+
+// Pos and Size of quote
+.mat-card-content{
+    position: absolute;
+    color:white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,50%);
+    font-size: 48px;
+}
