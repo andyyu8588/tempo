@@ -87,7 +87,7 @@
                         <br>
                         <section class="example-section col">
                             <span *ngFor='let equip of equipment'>
-                                <mat-checkbox class="example-margin" >{{ equip }}</mat-checkbox>
+                                <mat-checkbox class="example-margin" (change)='changeEquip(equip)'>{{ equip }}</mat-checkbox>
                                 &nbsp; &nbsp;
                             </span>
                         </section>
@@ -102,7 +102,7 @@
                     <br>
                     <section class="example-section">
                         <span *ngFor='let muscle of muscleGroups'>
-                            <mat-checkbox >
+                            <mat-checkbox (change)='changeMuscle(muscle)'>
                                 {{ muscle }}
                             </mat-checkbox>
                             &nbsp; &nbsp;
@@ -113,7 +113,7 @@
             </mat-card>
             <mat-card class="">
                 <mat-card-content class="">
-                    <mat-label class="strong">
+                    <mat-label>
                         <button mat-button color="primary">Workout Duration:</button>
                     <button mat-flat-button color="primary">
                       {{ slider.value }} min
@@ -126,7 +126,7 @@
                 </mat-card-content>
             </mat-card>
       <div>
-        <button mat-button routerLink='/myaccount' (click)='preferenceClick()'>Skip</button>
+        <button mat-button routerLink='/myaccount' (click)='preferenceClick()' class="font-weight-light">Skip</button>
         <button mat-button routerLink>Done</button>
       </div>
     </mat-step>
