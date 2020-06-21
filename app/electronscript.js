@@ -7,6 +7,15 @@ const { timer } = require('rxjs')
 
 var userPath = path.join(app.getPath('userData'), 'data.json')
 
+if (!fs.existsSync(userPath)) {
+  fs.writeFile(userPath, JSON.stringify({
+    'username': null,
+    'password': null,
+  }), () => {
+    console.log('data file created')
+  })
+}
+
 var window = null
 
 // tray icon settings
