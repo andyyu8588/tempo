@@ -53,22 +53,32 @@ const checkBlacklisted = (data) => {
 //update user history
 //takes in object containing username, date, time and exercises
 const updateHistory = (data) => {
+    User.findOne({username : data.username},(err,res)=>{
+        if (err){
+            console.log(err)
+        }
+        else{
+            if (res[0]){//append workout to history
+                if (res[0].history[history.length-1].date == data.date){
+                    res[0].history[history.length-1].workouts.push(
+                        {type : data.time, value : data.exercises}
+                    )
+                    res.save()
+                    
+                }
+                else{//create new history
+                    res[0].history.append({
+                        date : data.date,
+                        workouts : [{type : data.time, value : data.exercises}],
+                    })
+                    res.save()
+                    
+                }
+            }
+        }
+    }
+)}
 
-    User.findOneAndUpdate({username : data.username},
-        {$push:{ history,[history.length-1] : 'asd' }}
-    
-        )
-
-}
 
 
-
-module.exports = {createUser, addToBlacklist, checkBlacklisted}
-
-// res[0].update({$push:{ history :{
-//     date : data.date,
-//     workouts : [{
-//         time : data.time,
-//         exercises : [data.exercises]
-//     }]
-// } }})
+module.exports = {createUser, addToBlacklist, checkBlacklisted, updateHistory}

@@ -1,6 +1,7 @@
 const dataset = require( './JEFITDB.json');
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,14 +26,16 @@ export class WorkoutService implements OnDestroy{
   private _Workout : BehaviorSubject<any> = new BehaviorSubject(this.newWorkout)
   public Workout : Observable<any> = this._Workout.asObservable()
 
-  constructor() { }
+  constructor(private HttpService : HttpService) { }
 
   createWorkout(data){
     let possibleWorkout = []
     let chosenWorkout = []
     dataset.forEach(exercise => {
       if (data.difficulty == exercise.Difficulty && data.equipment.includes(exercise.Equipment) && data.type.includes(dataset.Type)){
-
+        this.HttpService.get('/User', {username : data.username}).then(res=>{
+          console.log(res)
+        })
         //needs if statement to check blacklist
         possibleWorkout.push(exercise)
       }

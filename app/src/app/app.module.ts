@@ -48,6 +48,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { AnalysisComponent } from './components/analysis/analysis.component';
 import { WorkoutComponent } from './components/workout/workout.component';
 import { RegisterComponent } from './components/register/register.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { RegisterComponent } from './components/register/register.component';
     SettingsComponent,
     AnalysisComponent,
     WorkoutComponent,
-    RegisterComponent
+    RegisterComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
