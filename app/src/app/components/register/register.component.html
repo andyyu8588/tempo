@@ -56,15 +56,18 @@
                 <label class='form-check-label' for='terms'>I have read and understand the terms & conditions of this agreement</label>
                 </mat-checkbox>
             </div>
-            <button mat-button type='submit' id='submit' class='btn btn-primary' aria-required='true'>Register</button>
+            <br>
+            <button mat-raised-button type='submit' id='submit' color=primary aria-required='true'>Register</button>
+            <br *ngIf="responseStatus">
             <small id="passwordHelpBlock" class="text-danger" *ngIf="responseStatus">There was an error processing your request: {{ responseMessage }}</small>
         </form>
-        <!-- <div>
-            <button mat-button matStepperNext class="btn btn-primary" (click)='registerClick()'>Register</button>
-        </div> -->
+        <br>
+        <hr>
+        <mat-label class="">Have an Account? </mat-label>
+        <button mat-raised-button color='primary' style="margin-left: 2%;" (click)='toggleState()'>Login</button>
     </mat-step>
     <mat-step [stepControl]="" label="My Preferences" [optional]="true">
         <app-bigsettings class=""></app-bigsettings>
-        <button mat-button routerLink class="font-weight-light">Skip this step</button>
+        <!-- <button mat-button routerLink class="font-weight-light">Skip this step</button> -->
     </mat-step>
-  </mat-horizontal-stepper>
+</mat-horizontal-stepper> 

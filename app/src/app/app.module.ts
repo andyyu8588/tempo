@@ -40,6 +40,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { LoginComponent } from './components/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -115,7 +116,8 @@ import { BigsettingsComponent } from './components/bigsettings/bigsettings.compo
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxElectronModule
+    NgxElectronModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
