@@ -31,11 +31,12 @@ export class LoginComponent implements OnInit {
   loginClicked() {
     if (!(localStorage.getItem('username'))) {
       let credentials = {
-        email: this.loginForm.get('username').value,
+        username: this.loginForm.get('username').value,
         password: this.loginForm.get('password').value
       }
-      this.HttpService.get('/login', credentials)
+      this.HttpService.get('/user/login', credentials)
       .then((response: any) => {
+        console.log(response)
         if (response.status == 200) {
           this.login_err = false
         } else {
