@@ -28,7 +28,7 @@ export class WorkoutComponent implements OnInit {
   WIP = [] // workouts in progress
 
   // Start with an initial value of 60 seconds
-  TIME_LIMIT = 60; // time for each exercise
+  TIME_LIMIT = 2; // time for each exercise
   WARNING_THRESHOLD = 20; // changes color
   ALERT_THRESHOLD = 10; // changes color
 
@@ -241,5 +241,21 @@ export class WorkoutComponent implements OnInit {
     }).then((res) => {
       console.log('blacklisted')
     })
+  }
+
+  globalUp() {
+    this.hiddenWorkout = []
+  }
+
+  globalDown() {
+    this.hiddenWorkout.forEach((exercise) => {
+      this.HttpService.post('/user/add', {
+        username: localStorage.getItem('username'),
+        name: exercise.Workout
+      }).then((res) => {
+        console.log('blacklisted')
+      })
+    })
+    this.hiddenWorkout = []
   }
 }
