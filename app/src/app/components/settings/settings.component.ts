@@ -31,13 +31,6 @@ export class SettingsComponent implements OnInit {
     return value;
   }
 
-  formatTimeout(value: number) {
-    let hour = Math.floor(value/60)
-    let min = value % 60
-    this.timeout = `${hour}h${min}min`
-    return value;
-  }
-
   onStartup: boolean
 
   constructor(private HttpService: HttpService,

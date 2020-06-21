@@ -51,6 +51,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { NgxElectronModule } from 'ngx-electron';
 import { LogoutComponent } from './components/logout/logout.component';
+import { TimepipePipe } from './services/timepipe.pipe';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { LogoutComponent } from './components/logout/logout.component';
     WorkoutComponent,
     RegisterComponent,
     SidebarComponent,
-    LogoutComponent
+    LogoutComponent,
+    TimepipePipe
   ],
   imports: [
     BrowserModule,

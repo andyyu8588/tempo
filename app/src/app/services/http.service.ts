@@ -1,5 +1,5 @@
 import { environment } from './../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
 
 @Injectable({
@@ -11,7 +11,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 export class HttpService {
   serverURL = environment.vision
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+  }
 
   delete(route: String, params: any) {
     let serverRoute = this.serverURL + route
@@ -21,7 +22,7 @@ export class HttpService {
           authorization: localStorage.getItem('token') ? localStorage.getItem('token').toString() : 'monkas'
         },
         params
-      }).subscribe((res) => {
+      }).subscribe((res: HttpResponse<any>) => {
         resolve(res)
       }, (err) => {
         reject(err)
@@ -37,7 +38,7 @@ export class HttpService {
           authorization: localStorage.getItem('token') ? localStorage.getItem('token').toString() : 'monkas'
         },
         params
-      }).subscribe((res) => {
+      }).subscribe((res: HttpResponse<any>) => {
         resolve(res)
       }, (err) => {
         reject(err)
@@ -50,7 +51,8 @@ export class HttpService {
     return new Promise((resolve, reject) => {
       this.http.post<any>(serverRoute,        
         params
-      ).subscribe((res) => {
+      )
+      .subscribe((res) => {
         resolve(res)
       }, (err) => {
         reject(err)
@@ -66,7 +68,7 @@ export class HttpService {
           authorization: localStorage.getItem('token') ? localStorage.getItem('token').toString() : 'monkas'
         },
         params
-      }).subscribe((res) => {
+      }).subscribe((res: HttpResponse<any>) => {
         resolve(res)
       }, (err) => {
         reject(err)

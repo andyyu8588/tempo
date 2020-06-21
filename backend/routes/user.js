@@ -7,7 +7,7 @@ router.post('/create', (req, res, next) => {
     User.find({username : req.body.username}, (err, result) => {
         if (err) {
             res.status(500).json({
-                message: err
+                error: err
             })
         } else if (result.length == 0) {
             const user = new User({
@@ -37,7 +37,7 @@ router.post('/preferences', (req, res, next) => {
     .exec((err, user) => {
         if (err) {
             res.status(500).json({
-                message: err
+                error: err
             })
         } else {
             res.status(200).json({
@@ -54,7 +54,7 @@ router.post('/add', (req, res, next) => {
         {$push: {blacklist : req.body.name}}, (err) => {
             if (err) {
                 res.status(500).json({
-                    message: err
+                    error: err
                 })
             }
             else {
@@ -70,7 +70,7 @@ router.post('/exercise', (req, res, next) => {
     User.findOne({username : req.body.username}, (err, result) => {
         if (err) {
             res.status(500).json({
-                message: err
+                error: err
             })
         }
         else {
@@ -115,7 +115,7 @@ router.get('/', (req, res, next) => {
     User.find({username : req.params.username}, (err, result) => {
         if (err) {
             res.status(500).json({
-                message: err
+                error: err
             })
         } else {
             res.status(200).json({
@@ -131,7 +131,7 @@ router.get('/check', (req, res, next) => {
     User.find({username : req.params.username}.exec((err, res) => {
         if (err) {
             res.status(500).json({
-                message: err
+                error: err
             })
         }
         else {

@@ -76,9 +76,9 @@ export class RegisterComponent implements OnInit {
       username: this.registrationForm.get('username').value,
       password: this.registrationForm.get('passwords.password').value
     })
-    .then((response: {[key: string]: any}) => {
+    .then((response: any) => {
       console.log(response)
-      if (response.status == 200) {
+      if (!response.error) {
         localStorage.setItem('username', this.registrationForm.get('username').value)
         localStorage.setItem('password', this.registrationForm.get('passwords.password').value)
         this.stepper.next()
