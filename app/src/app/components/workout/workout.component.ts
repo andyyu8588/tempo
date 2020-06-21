@@ -212,7 +212,6 @@ export class WorkoutComponent implements OnInit {
        this.WIP.push(exercise)
        this.hiddenWorkout.push(exercise)
      })
-     console.log(this.hiddenWorkout)
    }).catch((err) => {
      console.log(err)
    })
