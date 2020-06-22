@@ -96,25 +96,33 @@
   <!-- while in the workout -->
 
   <div *ngIf="progress && !rating">
+    <div class="row container">
       {{WIP[0].Workout}}
-      <div *ngIf="WIP[0].Demonstration_1" class="img-thumbnail">
-        <img [src]="WIP[0].Demonstration_1">
+      <div *ngIf="WIP[0].Demonstration_1" class="col-6">
+        <img [src]="WIP[0].Demonstration_1" >
       </div>
-      <div *ngIf="WIP[0].Demonstration_2" class="img-thumbnail">
+      <div *ngIf="WIP[0].Demonstration_2" class="col-6">
         <img [src]="WIP[0].Demonstration_2">
       </div>
-      <div *ngIf="WIP[0].Demonstration_3" class="img-thumbnail">
+      <div *ngIf="WIP[0].Demonstration_3" class="col-6">
         <img [src]="WIP[0].Demonstration_3">
       </div>
-      Main: {{WIP[0].Main}} <br>
+    </div>
+      <p>Main: {{WIP[0].Main}}</p>
+       <br>
       <div *ngIf="WIP[0].Detailed">
-        Detailed: {{WIP[0].Detailed}} <br>
+        <p>Detailed: {{WIP[0].Detailed}}</p>
       </div>
-      Equipment: {{WIP[0].Equipment}} <br>
-      Difficulty: {{WIP[0].Difficulty}} <br>
-      Mechanic: {{WIP[0].Mechanic}} <br>
-      Type: {{WIP[0].Type}} <br>
-      Instructions: {{WIP[0].Instructions}} <br>
+      <br>
+      <p> Equipment: {{WIP[0].Equipment}} </p>
+      <br>
+      <p>Difficulty: {{WIP[0].Difficulty}} </p>
+      <br>
+      <p>Mechanic: {{WIP[0].Mechanic}}</p>
+      <p>Type: {{WIP[0].Type}}</p>
+      <br>
+     <p>Instructions: <br> {{WIP[0].Instructions}}</p>
+       <br>
   </div>
 
   <!-- workout preview -->
@@ -129,24 +137,33 @@
         <mat-expansion-panel-header>
           {{exercise.Workout}}
         </mat-expansion-panel-header>
-        <div *ngIf="exercise.Demonstration_1" class="img-thumbnail">
+      <div class="container row">
+        <div *ngIf="exercise.Demonstration_1" class="col-6">
           <img [src]="exercise.Demonstration_1" alt="JEFIT error">
         </div>
-        <div *ngIf="exercise.Demonstration_2" class="img-thumbnail">
+        <div *ngIf="exercise.Demonstration_2" class="col-6">
           <img [src]="exercise.Demonstration_2" alt="JEFIT error">
         </div>
-        <div *ngIf="exercise.Demonstration_3" class="img-thumbnail">
+        <div *ngIf="exercise.Demonstration_3" class="col-6">
           <img [src]="exercise.Demonstration_3" alt="JEFIT error">
         </div>
-        Main: {{exercise.Main}} <br>
+      </div>
+      <p>Main: {{exercise.Main}}</p>
+         <br>
         <div *ngIf="exercise.Detailed">
-          Detailed: {{exercise.Detailed}} <br>
+          <p>Detailed: {{exercise.Detailed}}</p>
         </div>
-        Equipment: {{exercise.Equipment}} <br>
-        Difficulty: {{exercise.Difficulty}} <br>
-        Mechanic: {{exercise.Mechanic}} <br>
-        Type: {{exercise.Type}} <br>
-        Instructions: {{exercise.Instructions}} <br>
+        <br>
+        <p>Equipment: {{exercise.Equipment}}</p>
+        <br>
+        <p>Difficulty: {{exercise.Difficulty}}</p>
+        <br>
+        <p>Mechanic: {{exercise.Mechanic}} </p>
+        <br>
+        <p>Type: {{exercise.Type}} </p>
+        <br>
+        <p>Instructions: <br> {{exercise.Instructions}}</p>
+        <br>
       </mat-expansion-panel>
     </mat-accordion>
   </div>

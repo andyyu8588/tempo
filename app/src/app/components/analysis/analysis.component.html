@@ -33,7 +33,7 @@ showYAxisLabel='true'
   </ngx-charts-line-chart>
 </div>
 
-<div *ngIf="selectedWorkout">
+<div *ngIf="selectedWorkout && clicked">
   <h1 *ngFor="let item of this.chosenWorkout">
     -{{item}}
   </h1>

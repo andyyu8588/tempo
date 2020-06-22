@@ -1,10 +1,12 @@
+
+
 /* Sets the containers height and width */
 .base-timer {
     position: relative;
     height: 300px;
     width: 300px;
 }
-  
+
 /* Removes SVG styling that would hide the time label */
 .base-timer__circle {
     fill: none;
@@ -62,11 +64,11 @@
 .base-timer__path-remaining.green {
     color: rgb(65, 184, 131);
 }
-  
+
 .base-timer__path-remaining.orange {
     color: orange;
 }
-  
+
 .base-timer__path-remaining.red {
     color: red;
 }
@@ -85,17 +87,17 @@
 .example-action-buttons {
     padding-bottom: 20px;
   }
-  
+
   .example-headers-align .mat-expansion-panel-header-title,
   .example-headers-align .mat-expansion-panel-header-description {
     flex-basis: 0;
   }
-  
+
   .example-headers-align .mat-expansion-panel-header-description {
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .example-headers-align .mat-form-field + .mat-form-field {
     margin-left: 8px;
   }
