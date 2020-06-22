@@ -1,7 +1,9 @@
-<div>
+<div *ngIf="waiting">
   <app-timer></app-timer>
 </div>
-<div>
+
+
+<div *ngIf="!waiting">
   <!-- timer -->
 
   <div class="base-timer">
@@ -21,7 +23,7 @@
         ></path>
       </g>
     </svg>
-    <span *ngIf="!done && !first" id="base-timer-label" class="base-timer__label">
+    <span *ngIf="!done && !first && !waiting" id="base-timer-label" class="base-timer__label">
       {{ formatTimeLeft(this.timeLeft) }}
     </span>
     <span *ngIf="first" id="base-timer-label" class="base-timer__label">
@@ -34,9 +36,10 @@
 
   <!-- start, pause, resume buttons -->
 
-  <button *ngIf="(done || first) && !rating" mat-button (click)="startTimer()">Start!</button>
-  <button *ngIf="!done && !pause && !first" mat-button (click)="pauseTimer()">Pause</button>
-  <button *ngIf="!done && pause && !first" mat-button (click)="resumeTimer()">Resume</button>
+  <button *ngIf="(done || first) && !rating && !waiting" mat-button (click)="startTimer()">Start!</button>
+  <button *ngIf="(done || first) && !rating && !waiting" mat-button (click)="skip()">Skip</button>
+  <button *ngIf="!done && !pause && !first && !waiting" mat-button (click)="pauseTimer()">Pause</button>
+  <button *ngIf="!done && pause && !first && !waiting" mat-button (click)="resumeTimer()">Resume</button>
 
   <!-- ratings -->
 

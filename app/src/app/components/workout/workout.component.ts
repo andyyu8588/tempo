@@ -23,6 +23,7 @@ export class WorkoutComponent implements OnInit {
   pause: boolean = false; // if workout is paused
   progress: boolean = false; // if workout is in progress
   rating: boolean = false; // if rating is in progress
+  waiting: boolean = false; // if we are waiting for a workout
   hiddenWorkout = [] // full workout
   workout: any // full workout
   WIP = [] // workouts in progress
@@ -245,6 +246,26 @@ export class WorkoutComponent implements OnInit {
       if (this.hiddenWorkout.length == 0) {
         this.reset()
       }
+    })
+  }
+
+  skip() {
+    this.waiting = true;
+    this.done = false; // if current exercise is done
+    this.first = true; // if the component is first loaded
+    this.pause = false; // if workout is paused
+    this.progress = false; // if workout is in progress
+    this.rating = false; // if rating is in progress
+    this.hiddenWorkout = [] // full workout
+    this.workout = [] // full workout
+    this.WIP = [] // workouts in progress
+    this.timePassed = 0;
+    this.timeLeft = this.TIME_LIMIT;
+    this.timerInterval = null;
+    this.WorkoutService.saveWorkout([], localStorage.getItem('username')).then((res) => {
+      console.log('workout saved')
+    }).catch((err) => {
+      console.log(err)
     })
   }
 
