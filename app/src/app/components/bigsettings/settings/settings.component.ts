@@ -59,7 +59,6 @@ export class SettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
   ngOnInit(): void {
     this.muscleGroups = ['Abs','Back','Biceps','Chest','Forearm', 'Glutes', 'Shoulders', 'Triceps', 'Upper Legs', 'Lower Legs', 'Cardio']
     this.equipment = ['Bands', 'Barbell', 'Bench', 'Dumbbell', 'Exercise Ball', 'EZ - Bar', 'Foam Roll', 'Kettlebell', 'Machine - Cardio', 'Machine - Strength', 'Pull Bar', 'Weight Plate']
-
   }
 
   ngAfterViewChecked() {
@@ -81,7 +80,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
       this._muscleGroups.push(value)
     }
   }
-  
+
   muscleCheck(value: string): boolean {
     if (this._muscleGroups.includes(value)) {
       return true
@@ -114,7 +113,7 @@ export class SettingsComponent implements OnInit, AfterViewChecked, OnDestroy {
       this.onStartup = !this.onStartup
     }
   }
-  
+
   onSubmit() {
     this._equipment.push('Body Only')
     this.responseStatus, this.updateStatus = false

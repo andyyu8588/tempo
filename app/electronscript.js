@@ -61,7 +61,7 @@ function createWindow() {
     win.loadFile('./dist/app/index.html')
 
     // Open the DevTools.
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
     resolve(win)
   })
