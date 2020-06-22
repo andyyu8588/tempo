@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 app.use('/user', userRoute)
 
 app.use('/tempo.rar', (req, res, next) => {
-  res.sendFile(path.resolve(__dirname, '..', 'tempo.rar'))
+  res.sendFile(path.resolve(__dirname, '..', 'tempo-win32-ia32'))
 })
 
 // serve angular
