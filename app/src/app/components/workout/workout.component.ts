@@ -29,7 +29,7 @@ export class WorkoutComponent implements OnInit {
   WIP = [] // workouts in progress
 
   // Start with an initial value of 60 seconds
-  TIME_LIMIT = 2; // time for each exercise
+  TIME_LIMIT = 60; // time for each exercise
   WARNING_THRESHOLD = 20; // changes color
   ALERT_THRESHOLD = 10; // changes color
 
