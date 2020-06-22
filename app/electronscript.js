@@ -121,11 +121,11 @@ ipcMain.on('set', (event, arg) => {
       'username': null,
       'password': null,
     }), () => {
-      event.returnValue = 'delete ok'  
+      event.returnValue = 'delete ok'
     })
   } else {
     fs.writeFile(userPath, JSON.stringify(arg), (err) => {
-      event.returnValue = 'set ok'  
+      event.returnValue = 'set ok'
     })
   }
 
@@ -210,5 +210,8 @@ ipcMain.on('timeout', (event, arg) => {
     } else if (time <= 310) {
     }
   }, 300000)
+
+//     }
+//   }, 300000)
 
 })

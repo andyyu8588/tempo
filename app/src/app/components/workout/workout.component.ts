@@ -212,7 +212,6 @@ export class WorkoutComponent implements OnInit {
        this.WIP.push(exercise)
        this.hiddenWorkout.push(exercise)
      })
-     console.log(this.hiddenWorkout)
    }).catch((err) => {
      console.log(err)
    })
@@ -230,6 +229,9 @@ export class WorkoutComponent implements OnInit {
   // thumbs up
   up(exercise) {
     this.hiddenWorkout.splice(this.hiddenWorkout.indexOf(exercise), 1)
+    if (this.hiddenWorkout.length == 0) {
+      this.reset()
+    }
   }
 
   // thumbs down, blacklisted
@@ -240,11 +242,15 @@ export class WorkoutComponent implements OnInit {
       name: exercise.Workout
     }).then((res) => {
       console.log('blacklisted')
+      if (this.hiddenWorkout.length == 0) {
+        this.reset()
+      }
     })
   }
 
   globalUp() {
     this.hiddenWorkout = []
+    this.reset()
   }
 
   globalDown() {
@@ -257,5 +263,21 @@ export class WorkoutComponent implements OnInit {
       })
     })
     this.hiddenWorkout = []
+    this.reset()
+  }
+
+  reset() {
+    this.done = false; // if current exercise is done
+    this.first = true; // if the component is first loaded
+    this.pause = false; // if workout is paused
+    this.progress = false; // if workout is in progress
+    this.rating = false; // if rating is in progress
+    this.hiddenWorkout = [] // full workout
+    this.workout = [] // full workout
+    this.WIP = [] // workouts in progress
+    this.timePassed = 0;
+    this.timeLeft = this.TIME_LIMIT;
+    this.timerInterval = null;
+    this.createWorkout()
   }
 }
