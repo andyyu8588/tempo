@@ -200,7 +200,7 @@ ipcMain.on('timeout', (event, arg) => {
   console.log('got timeout', arg)
   timer = setInterval(() => {
     window.webContents.send('timeAlert', {msg:'timesUp'})
-  }, arg*60000)
+  }, 10000)
 
   // stop/start when on user idle, check every 5 min
   setInterval(() => {
