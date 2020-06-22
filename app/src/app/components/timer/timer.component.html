@@ -1,0 +1,33 @@
+<div class="base-timer">
+  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="base-timer__circle">
+      <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+      <path
+        id="base-timer-path-remaining"
+        stroke-dasharray="283"
+        class="base-timer__path-remaining green"
+        d="
+          M 50, 50
+          m -45, 0
+          a 45,45 0 1,0 90,0
+          a 45,45 0 1,0 -90,0
+        "
+      ></path>
+    </g>
+  </svg>
+  <span *ngIf="!done && !first" id="base-timer-label" class="base-timer__label">
+    {{ formatTimeLeft(this.timeLeft) }}
+  </span>
+  <span *ngIf="first" id="base-timer-label" class="base-timer__label">
+    1:00
+  </span>
+  <span *ngIf="done" class="base-timer__label">
+      Done!
+  </span>
+</div>
+
+<!-- start, pause, resume buttons -->
+
+<button *ngIf="(done || first)" mat-button (click)="startTimer()">Start!</button>
+<button *ngIf="!done && !pause && !first" mat-button (click)="pauseTimer()">Pause</button>
+<button *ngIf="!done && pause && !first" mat-button (click)="resumeTimer()">Resume</button>

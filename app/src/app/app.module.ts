@@ -55,6 +55,7 @@ import { NgxElectronModule } from 'ngx-electron';
 import { LogoutComponent } from './components/logout/logout.component';
 import { TimepipePipe } from './services/timepipe.pipe';
 import { BigsettingsComponent } from './components/bigsettings/bigsettings.component';
+import { TimerComponent } from './components/timer/timer.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { BigsettingsComponent } from './components/bigsettings/bigsettings.compo
     SidebarComponent,
     LogoutComponent,
     TimepipePipe,
-    BigsettingsComponent
+    BigsettingsComponent,
+    TimerComponent
   ],
   imports: [
     BrowserModule,

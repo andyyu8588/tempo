@@ -13,15 +13,6 @@ export class WorkoutService implements OnDestroy{
   stretchTime = 1
   exerTime = 0.75
 
-
-/* data = {
-  username : 'username',
-  difficulty : 'intermediate',
-  equipment : ['bodyweight'],
-  bodypart : ['chest'],
-  duration : 5,
-}
-*/
   private newWorkout: Array<Object>
   private _Workout : BehaviorSubject<any> = new BehaviorSubject(this.newWorkout)
   public Workout : Observable<any> = this._Workout.asObservable()
@@ -70,7 +61,7 @@ export class WorkoutService implements OnDestroy{
         resolve(chosenWorkout)
       })
     })
-    
+
   }
   saveWorkout(chosenWorkout, username){
     return new Promise((resolve, reject) => {
@@ -91,7 +82,7 @@ export class WorkoutService implements OnDestroy{
       }).catch((err) => {
         reject(err)
       })
-    })    
+    })
   }
 
   ngOnDestroy(){
