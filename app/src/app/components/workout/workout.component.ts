@@ -262,6 +262,11 @@ export class WorkoutComponent implements OnInit {
     this.timePassed = 0;
     this.timeLeft = this.TIME_LIMIT;
     this.timerInterval = null;
+    this.WorkoutService.saveWorkout([], localStorage.getItem('username')).then((res) => {
+      console.log('workout saved')
+    }).catch((err) => {
+      console.log(err)
+    })
   }
 
   globalUp() {
