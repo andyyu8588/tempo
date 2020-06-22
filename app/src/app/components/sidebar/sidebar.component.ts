@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-sidebar',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
+  @ViewChild('toworkout') toworkout: HTMLButtonElement
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onToWorkout() {
+    this.toworkout.click()
   }
 
 }
