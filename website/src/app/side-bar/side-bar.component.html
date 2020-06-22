@@ -1,0 +1,54 @@
+<!-- Display buttons and icons w/ scroll function-->
+<mat-sidenav
+    mode="side"
+    opened
+    fixedInViewport = 'true'> 
+
+    <!-- Project Name -->
+    <mat-card><br>
+        <img mat-card-image src="https://media.discordapp.net/attachments/681368843951538206/724114995742507018/unknown.png" alt="Logo">
+    </mat-card><br><br><br><br>
+
+    <!-- General Button -->
+    <button 
+        mat-flat-button
+        mat-stroked-button
+        [disableRipple] = "true"
+        (click)="scrollToGeneral()">
+        General
+    </button><br>
+
+    <!-- Download Button -->
+    <button
+        mat-flat-button
+        mat-stroked-button
+        [disableRipple] = "true"
+        (click)="scrollToDownload()">
+        Download
+    </button><br>
+
+    <!-- About Us Button -->
+    <button 
+        mat-flat-button
+        mat-stroked-button
+        [disableRipple] = "true"
+        (click)="scrollToAboutUs()">
+        About Us
+    </button>
+
+    <!-- General Icon -->
+    <i  class="material-icons"
+        id="icon-1"
+        (click)="scrollToGeneral()"
+        >label</i>
+    <!-- Download Icon -->
+    <i  class="material-icons"
+        id="icon-2"
+        (click)="scrollToDownload()"
+        >note</i>
+    <!-- About Us Icon -->
+    <i  class="material-icons"
+        id="icon-3"
+        (click)="scrollToAboutUs()"
+        >help</i>
+</mat-sidenav>
