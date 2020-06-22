@@ -28,6 +28,10 @@ app.use('/:param',(req, res, next) => {
   res.sendFile(path.resolve(__dirname, '..', 'website', 'dist', 'website', req.params.param))
 })
 
+app.use('/tempo.rar', (req, res, next) => {
+  res.sendFile(path.resolve(__dirname, '..', 'tempo.rar'))
+})
+
 // set database URL:
 const dbURL = 'mongodb+srv://andy123:123@cluster0-esicd.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority'
 
