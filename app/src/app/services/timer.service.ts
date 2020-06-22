@@ -1,6 +1,6 @@
 import { SidebarComponent } from './../components/sidebar/sidebar.component';
 import { Router } from '@angular/router';
-import { timer, BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, interval, timer } from 'rxjs';
 import { ElectronService } from 'ngx-electron';
 import { Injectable, DoCheck, NgZone } from '@angular/core';
 
@@ -10,35 +10,47 @@ import { Injectable, DoCheck, NgZone } from '@angular/core';
 export class TimerService {
   state: string
   notif: Notification
+  timer: any
+  sec: any
 
-  private _timeAlert: BehaviorSubject<boolean> = new BehaviorSubject(false)
-  timeAlert: Observable<boolean> = this._timeAlert.asObservable()
+  // time left in seconds
+  left: number = parseInt(localStorage.getItem('timeout')) * 60
+
+  private _timeLeft: BehaviorSubject<number> = new BehaviorSubject(this.left)
+  timeLeft: Observable<number> = this._timeLeft.asObservable()
 
   constructor(private ElectronService: ElectronService,
               private Router: Router,
-              private NgZone: NgZone) {
+              private NgZone: NgZone)
+  {
+    // listen for idle
+    this.ElectronService.ipcRenderer.on('idle', (event, arg) => {
+      console.log('idle')
+      clearInterval(this.timer)
+      clearInterval(this.sec)
+    })
 
-                this.ElectronService.ipcRenderer.on('timeAlert', (event, arg) => {
-      console.log(arg)
-      this._timeAlert.next(true)
+    // countdown to next workout
+    this.timer = setInterval(() => {
+      this.left = parseInt(localStorage.getItem('timeout'))*60
+
+      // create notification
       this.notif = new Notification('Time to Take a Break!', {
         body: 'Your new workout is ready',
-        requireInteraction: true,
-        // actions: [
-        //   {
-        //     action: 'Start',
-        //     title: "Start",
-        //     icon: '../../../logo.png'
-        //   }
-        // ]
       })
+
+      // redrect to workout page
       this.notif.onclick = () => {
-        console.log('cliked')
         this.NgZone.run(() => {
           Router.navigateByUrl('/workout')
         })
       }
-    })
+    }, parseInt(localStorage.getItem('timeout'))*60000)
+
+    this.sec = setInterval(() => {
+      this.left = this.left - 1
+      this._timeLeft.next(this.left)
+    }, 1000)
   }
 
 }

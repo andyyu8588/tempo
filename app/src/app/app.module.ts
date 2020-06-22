@@ -56,6 +56,7 @@ import { LogoutComponent } from './components/logout/logout.component';
 import { TimepipePipe } from './services/timepipe.pipe';
 import { BigsettingsComponent } from './components/bigsettings/bigsettings.component';
 import { TimerComponent } from './components/timer/timer.component';
+import { FromsecondsPipe } from './services/fromseconds.pipe';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { TimerComponent } from './components/timer/timer.component';
     LogoutComponent,
     TimepipePipe,
     BigsettingsComponent,
-    TimerComponent
+    TimerComponent,
+    FromsecondsPipe
   ],
   imports: [
     BrowserModule,
