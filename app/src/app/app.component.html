@@ -21,11 +21,10 @@
         <br>
         <div class="row" style="padding-left: 20%; padding-right: 20%;">
           <button mat-raised-button color='primary' class='col' (click)='toggleState()'>Register</button>
-        </div> 
+        </div>
       </div>
     </div>
     <app-register *ngIf='!state && !checkLogin()'></app-register>
-
     <router-outlet *ngIf='checkLogin()'></router-outlet>
   </mat-sidenav-content>
 
