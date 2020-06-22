@@ -20,12 +20,13 @@ app.use((req, res, next) => {
     next()
 })
 
-// serve angular
-// app.use('/',(req, res, next) => {
-//   // res.sendFile(express.static(path.resolve(__dirname, '..', '..', 'vision', 'dist', 'vision', 'index.html')))
-// })
+
 app.use('/user', userRoute)
 
+// serve angular
+app.use('/:param',(req, res, next) => {
+  res.sendFile(path.resolve(__dirname, '..', 'website', 'dist', 'website', req.params.param))
+})
 
 // set database URL:
 const dbURL = 'mongodb+srv://andy123:123@cluster0-esicd.gcp.mongodb.net/<dbname>?retryWrites=true&w=majority'
