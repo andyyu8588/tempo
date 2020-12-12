@@ -52,6 +52,7 @@ function createWindow() {
       width: 1920,
       height: 1080,
       title: "Tempo",
+      icon: "./src/assets/img/clock.png",
       webPreferences: {
         nodeIntegration: true
       }
@@ -60,9 +61,12 @@ function createWindow() {
 
     // and load the index.html of the app.
     win.loadFile('./dist/app/index.html')
-
+    win.setTitle('Tempo');
+    win.on('page-title-updated', function(e) {
+      e.preventDefault()
+    });
     // Open the DevTools.
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
     resolve(win)
   })

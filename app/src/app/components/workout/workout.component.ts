@@ -29,7 +29,7 @@ export class WorkoutComponent implements OnInit {
   WIP = [] // workouts in progress
 
   // Start with an initial value of 60 seconds
-  TIME_LIMIT = 60; // time for each exercise
+  TIME_LIMIT = 30; // time for each exercise
   WARNING_THRESHOLD = 20; // changes color
   ALERT_THRESHOLD = 10; // changes color
 
@@ -77,17 +77,20 @@ export class WorkoutComponent implements OnInit {
   }
 
   // time displayed on timer
-  formatTimeLeft(secondsleft: number) {
+  formatTimeLeft(time: number) {
     // The largest round integer less than or equal to the result of time divided being by 60.
-    const minutes = Math.floor(secondsleft / 60);
+    const minutes = Math.floor(time / 60);
 
     // Seconds are the remainder of the time divided by 60 (modulus operator)
-    let seconds = secondsleft % 60;
+    let seconds = time % 60;
     let secondsString;
 
     // If the value of seconds is less than 10, then display seconds with a leading zero
- if (secondsleft == 0) {
-      this.stopTimer()
+    if (seconds < 0) {
+      return "Done!"
+    } else if (seconds == 0) {
+      this.setRemainingPathColor(this.timeLeft)
+      this.stopTimer();
       return 'Next!'
     } else if (seconds < 10) {
       secondsString = `0${seconds}`;
@@ -125,19 +128,22 @@ export class WorkoutComponent implements OnInit {
 
   // swap to next exercise
   nextExercise() {
-    this.reset();
+    // this.reset();
     if (this.WIP.length == 1) {
       this.WIP.shift()
       this.saveWorkout()
       this.rating = true
     } else {
+      this.progress = true;
       this.done = false;
+      this.first = false;
+      this.workout = []
       this.WIP.shift()
+      this.remainingPathColor = this.COLOR_CODES.info.color;
       this.timerInterval = setInterval(() => {
         // The amount of time passed increments by one
         this.timePassed = this.timePassed += 1;
         this.timeLeft = this.TIME_LIMIT - this.timePassed;
-
         // The time left label is updated
         document.getElementById("base-timer-label").innerHTML = this.formatTimeLeft(this.timeLeft);
         this.setCircleDasharray();
@@ -203,6 +209,13 @@ export class WorkoutComponent implements OnInit {
       document
         .getElementById("base-timer-path-remaining")
         .classList.add(warning.color);
+    }
+    else{      document
+      .getElementById("base-timer-path-remaining")
+      .classList.remove(alert.color);
+            document
+        .getElementById("base-timer-path-remaining")
+        .classList.add(info.color);
     }
   }
 
