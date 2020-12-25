@@ -63,6 +63,8 @@ export class WorkoutComponent implements OnInit {
   // generate workout on init
   ngOnInit(): void {
     this.createWorkout()
+
+
   }
 
   // cleanup
@@ -75,18 +77,16 @@ export class WorkoutComponent implements OnInit {
   }
 
   // time displayed on timer
-  formatTimeLeft(time: number) {
+  formatTimeLeft(secondsleft: number) {
     // The largest round integer less than or equal to the result of time divided being by 60.
-    const minutes = Math.floor(time / 60);
+    const minutes = Math.floor(secondsleft / 60);
 
     // Seconds are the remainder of the time divided by 60 (modulus operator)
-    let seconds = time % 60;
+    let seconds = secondsleft % 60;
     let secondsString;
 
     // If the value of seconds is less than 10, then display seconds with a leading zero
-    if (seconds < 0) {
-      return "Done!"
-    } else if (seconds == 0) {
+ if (secondsleft == 0) {
       this.stopTimer()
       return 'Next!'
     } else if (seconds < 10) {
@@ -99,7 +99,7 @@ export class WorkoutComponent implements OnInit {
       this.setRemainingPathColor(this.timeLeft)
       // The output in MM:SS format
       return `${minutes}:${secondsString}`;
-    }    
+    }
   }
 
   // workout is started
@@ -109,6 +109,7 @@ export class WorkoutComponent implements OnInit {
       this.done = false;
       this.first = false;
       this.workout = []
+
       this.timerInterval = setInterval(() => {
 
         // The amount of time passed increments by one
@@ -124,6 +125,7 @@ export class WorkoutComponent implements OnInit {
 
   // swap to next exercise
   nextExercise() {
+    this.reset();
     if (this.WIP.length == 1) {
       this.WIP.shift()
       this.saveWorkout()
@@ -132,11 +134,10 @@ export class WorkoutComponent implements OnInit {
       this.done = false;
       this.WIP.shift()
       this.timerInterval = setInterval(() => {
-
         // The amount of time passed increments by one
         this.timePassed = this.timePassed += 1;
         this.timeLeft = this.TIME_LIMIT - this.timePassed;
-  
+
         // The time left label is updated
         document.getElementById("base-timer-label").innerHTML = this.formatTimeLeft(this.timeLeft);
         this.setCircleDasharray();
