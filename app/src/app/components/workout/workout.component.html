@@ -27,7 +27,7 @@
       {{ formatTimeLeft(this.timeLeft) }}
     </span>
     <span *ngIf="first" id="base-timer-label" class="base-timer__label">
-      1:00
+      0:30
     </span>
     <span *ngIf="done" class="base-timer__label">
         Done!
@@ -94,10 +94,10 @@
   </div>
 
   <!-- while in the workout -->
-
+<mat-card>
   <div *ngIf="progress && !rating">
     <div class="row container">
-      {{WIP[0].Workout}}
+      <h1>{{WIP[0].Workout}}</h1>
       <div *ngIf="WIP[0].Demonstration_1" class="col-6">
         <img [src]="WIP[0].Demonstration_1" >
       </div>
@@ -108,23 +108,23 @@
         <img [src]="WIP[0].Demonstration_3">
       </div>
     </div>
-      <p>Main: {{WIP[0].Main}}</p>
+      <p> <b>Main:</b>  {{WIP[0].Main}}</p>
        <br>
       <div *ngIf="WIP[0].Detailed">
-        <p>Detailed: {{WIP[0].Detailed}}</p>
+        <p> <b>Detailed:</b>  {{WIP[0].Detailed}}</p>
       </div>
       <br>
-      <p> Equipment: {{WIP[0].Equipment}} </p>
+      <p> <b>Equipment:</b> {{WIP[0].Equipment}} </p>
       <br>
-      <p>Difficulty: {{WIP[0].Difficulty}} </p>
+      <p> <b>Difficulty:</b> {{WIP[0].Difficulty}} </p>
       <br>
-      <p>Mechanic: {{WIP[0].Mechanic}}</p>
-      <p>Type: {{WIP[0].Type}}</p>
+      <p> <b>Mechanic:</b> {{WIP[0].Mechanic}}</p>
+      <p> <b>Type:</b> {{WIP[0].Type}}</p>
       <br>
-     <p>Instructions: <br> {{WIP[0].Instructions}}</p>
+     <p> <b>Instructions:</b> <br> {{WIP[0].Instructions}}</p>
        <br>
   </div>
-
+</mat-card>
   <!-- workout preview -->
 
   <div *ngIf="!progress">
@@ -135,7 +135,7 @@
     <mat-accordion class="example-headers-align" multi>
       <mat-expansion-panel *ngFor="let exercise of workout">
         <mat-expansion-panel-header>
-          {{exercise.Workout}}
+          <h1>{{exercise.Workout}}</h1>
         </mat-expansion-panel-header>
       <div class="container row">
         <div *ngIf="exercise.Demonstration_1" class="col-6">
@@ -148,21 +148,21 @@
           <img [src]="exercise.Demonstration_3" alt="JEFIT error">
         </div>
       </div>
-      <p>Main: {{exercise.Main}}</p>
+      <p> <b>Main:</b>  {{exercise.Main}}</p>
          <br>
         <div *ngIf="exercise.Detailed">
-          <p>Detailed: {{exercise.Detailed}}</p>
+          <p> <b>Detailed:</b> {{exercise.Detailed}}</p>
         </div>
         <br>
-        <p>Equipment: {{exercise.Equipment}}</p>
+        <p> <b>Equipment:</b> {{exercise.Equipment}}</p>
         <br>
-        <p>Difficulty: {{exercise.Difficulty}}</p>
+        <p> <b>Difficulty:</b> {{exercise.Difficulty}}</p>
         <br>
-        <p>Mechanic: {{exercise.Mechanic}} </p>
+        <p> <b>Mechanic:</b> {{exercise.Mechanic}} </p>
         <br>
-        <p>Type: {{exercise.Type}} </p>
+        <p> <b>Type:</b> {{exercise.Type}} </p>
         <br>
-        <p>Instructions: <br> {{exercise.Instructions}}</p>
+        <p> <b>Instructions:</b> <br> {{exercise.Instructions}}</p>
         <br>
       </mat-expansion-panel>
     </mat-accordion>

@@ -15,6 +15,7 @@ if (!fs.existsSync(userPath)) {
   })
 }
 
+
 var window = null
 
 // tray icon settings
@@ -51,6 +52,7 @@ function createWindow() {
       width: 1920,
       height: 1080,
       title: "Tempo",
+      icon: "./src/assets/img/clock.png",
       webPreferences: {
         nodeIntegration: true
       }
@@ -59,7 +61,10 @@ function createWindow() {
 
     // and load the index.html of the app.
     win.loadFile('./dist/app/index.html')
-
+    win.setTitle('Tempo');
+    win.on('page-title-updated', function(e) {
+      e.preventDefault()
+    });
     // Open the DevTools.
     // win.webContents.openDevTools()
 
@@ -80,7 +85,7 @@ app.whenReady().then(() => {
         win.hide()
       }
     })
-    tray = new Tray('./logo.png')
+    tray = new Tray('./up.png')
     tray.setToolTip('hi')
     tray.setContextMenu(trayMenu)
     tray.on('double-click', () => {
