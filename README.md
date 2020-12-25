@@ -1,9 +1,13 @@
-### tempo
+# Tempo
 
-In /app, run
+Take a break from work and exercise to regain your tempo! - Application for working out at the desk
 
-npm i
+## Setup (for windows)
+
+In `/app`, run
+
+`npm i
 ng build --prod=true
-npm run package-win 
+npm run package-win`
 
-The executable application should be in /app/release-builds
+You can find the executable application in `/app/release-builds`
