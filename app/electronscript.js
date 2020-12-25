@@ -15,6 +15,7 @@ if (!fs.existsSync(userPath)) {
   })
 }
 
+
 var window = null
 
 // tray icon settings
@@ -61,7 +62,7 @@ function createWindow() {
     win.loadFile('./dist/app/index.html')
 
     // Open the DevTools.
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     resolve(win)
   })
@@ -80,7 +81,7 @@ app.whenReady().then(() => {
         win.hide()
       }
     })
-    tray = new Tray('./logo.png')
+    tray = new Tray('./up.png')
     tray.setToolTip('hi')
     tray.setContextMenu(trayMenu)
     tray.on('double-click', () => {
